@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>403 - Acceso Prohibido | WeaponsBara</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(139, 0, 0, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(220, 20, 60, 0.15) 0%, transparent 50%);
+            animation: rotate 30s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-container {
+            max-width: 800px;
+            text-align: center;
+            padding: 40px;
+            position: relative;
+            z-index: 1;
+            background: rgba(26, 26, 26, 0.9);
+            border-radius: 20px;
+            border: 3px solid #8b0000;
+            box-shadow: 0 20px 60px rgba(139, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .warning-strip {
+            background: repeating-linear-gradient(
+                45deg,
+                #000,
+                #000 10px,
+                #dc143c 10px,
+                #dc143c 20px
+            );
+            height: 10px;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .error-logo {
+            font-size: 3.5em;
+            color: #dc143c;
+            margin-bottom: 20px;
+            animation: shake 0.5s infinite;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        .error-code {
+            font-size: 10em;
+            font-weight: bold;
+            color: #dc143c;
+            text-shadow: 0 0 20px rgba(220, 20, 60, 0.8);
+            margin: 20px 0;
+            line-height: 1;
+        }
+
+        .error-title {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #dc143c;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .error-message {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #e0e0e0;
+            font-weight: 600;
+        }
+
+        .error-description {
+            font-size: 1.1em;
+            color: #a0a0a0;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .classified-stamp {
+            width: 200px;
+            height: 80px;
+            margin: 30px auto;
+            border: 5px solid #dc143c;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(-15deg);
+            opacity: 0.8;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: rotate(-15deg) scale(1);
+            }
+            50% {
+                transform: rotate(-15deg) scale(1.05);
+            }
+        }
+
+        .classified-stamp span {
+            font-size: 2em;
+            font-weight: bold;
+            color: #dc143c;
+            letter-spacing: 3px;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #dc143c 0%, #8b0000 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(220, 20, 60, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #3a3a3a 0%, #1a1a1a 100%);
+            color: #e0e0e0;
+            border: 2px solid #8b0000;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(139, 0, 0, 0.4);
+            border-color: #dc143c;
+        }
+
+        @media (max-width: 768px) {
+            .error-container {
+                padding: 20px;
+                margin: 20px;
+            }
+
+            .error-code {
+                font-size: 6em;
+            }
+
+            .error-title {
+                font-size: 1.8em;
+            }
+
+            .button-container {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="warning-strip"></div>
+        
+        <div class="error-logo">
+            <i class="fas fa-ban"></i>
+        </div>
+
+        <div class="error-code">403</div>
+        
+        <h1 class="error-title">¡Acceso Denegado!</h1>
+        
+        <h2 class="error-message">Zona de Seguridad Máxima</h2>
+        
+        <p class="error-description">
+            No tienes autorización de seguridad para acceder a esta área restringida. <br>
+            Esta sección contiene información clasificada de nivel CONFIDENCIAL.
+        </p>
+
+        <div class="classified-stamp">
+            <span>RESTRICTED</span>
+        </div>
+
+        <p class="error-description">
+            Si crees que deberías tener acceso, contacta con tu superior inmediato <br>
+            o con el departamento de seguridad para solicitar las credenciales apropiadas.
+        </p>
+
+        <div class="button-container">
+            <a href="/" class="btn btn-primary">
+                <i class="fas fa-home"></i>
+                Volver al Inicio
+            </a>
+            <a href="/login" class="btn btn-secondary">
+                <i class="fas fa-sign-in-alt"></i>
+                Iniciar Sesión
+            </a>
+        </div>
+    </div>
+</body>
+</html>

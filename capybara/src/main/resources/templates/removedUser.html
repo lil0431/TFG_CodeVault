@@ -1,0 +1,461 @@
+{{>header2}}
+
+<section class="status-message-section">
+  <div class="status-container">
+    <div class="status-icon deleted">
+      <i class="fas fa-user-slash"></i>
+    </div>
+    <h2>Cuenta Eliminada</h2>
+    <p class="status-message">Tu cuenta ha sido eliminada exitosamente | CodeVault</p>
+    <div class="status-details">
+      <div class="detail-item">
+        <i class="fas fa-check"></i>
+        <span>Se han removido todos tus datos personales</span>
+      </div>
+      <div class="detail-item">
+        <i class="fas fa-check"></i>
+        <span>Tus análisis y archivos fueron archivados</span>
+      </div>
+      <div class="detail-item">
+        <i class="fas fa-check"></i>
+        <span>Tu sesión ha sido cerrada automáticamente</span>
+      </div>
+      <div class="detail-item">
+        <i class="fas fa-info-circle"></i>
+        <span>Puedes crear una nueva cuenta en cualquier momento</span>
+      </div>
+    </div>
+    <div class="action-buttons">
+      <a href="/" class="btn btn-primary"><i class="fas fa-home"></i> Volver a Inicio</a>
+      <a href="/signup" class="btn btn-secondary"><i class="fas fa-user-plus"></i> Crear Nueva Cuenta</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  :root {
+    --primary-blue: #0f172a;
+    --secondary-blue: #1e293b;
+    --accent-blue: #3b82f6;
+    --bright-blue: #60a5fa;
+    --dark-bg: #0a0e27;
+    --text-light: #e2e8f0;
+    --text-grey: #94a3b8;
+  }
+
+  .status-message-section {
+    min-height: calc(100vh - 200px);
+    padding: 80px 0;
+    background: linear-gradient(135deg, var(--dark-bg) 0%, var(--primary-blue) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .status-message-section > div {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .status-container {
+    background: linear-gradient(135deg, var(--secondary-blue), var(--primary-blue));
+    border: 2px solid var(--accent-blue);
+    border-radius: 15px;
+    box-shadow: 0 10px 50px rgba(59, 130, 246, 0.3);
+    max-width: 600px;
+    width: 100%;
+    padding: 50px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .status-container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+    animation: pulse 4s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+  }
+
+  .status-icon {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    position: relative;
+    z-index: 1;
+    animation: iconPulse 2s infinite;
+  }
+
+  .status-icon.deleted {
+    background: linear-gradient(135deg, var(--accent-blue), var(--bright-blue));
+    color: var(--text-light);
+    box-shadow: 0 0 40px rgba(59, 130, 246, 0.4);
+    border: 3px solid var(--bright-blue);
+  }
+
+  @keyframes iconPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+
+  .status-container h2 {
+    color: var(--text-light);
+    font-size: 2rem;
+    margin-bottom: 15px;
+    text-shadow: 0 0 10px var(--accent-blue);
+    position: relative;
+    z-index: 1;
+  }
+
+  .status-message {
+    color: var(--text-grey);
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+  }
+
+  .status-details {
+    background: rgba(59, 130, 246, 0.05);
+    border: 1px solid var(--accent-blue);
+    border-radius: 10px;
+    padding: 25px;
+    margin: 30px 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .detail-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 0;
+    color: var(--text-light);
+    border-bottom: 1px solid var(--secondary-blue);
+  }
+
+  .detail-item:last-child {
+    border-bottom: none;
+  }
+
+  .detail-item i {
+    color: var(--bright-blue);
+    font-size: 1.2rem;
+    width: 25px;
+    text-align: center;
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .btn {
+    flex: 1;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent-blue), var(--bright-blue));
+    color: var(--text-light);
+    border: 1px solid var(--bright-blue);
+    box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+  }
+
+  .btn-primary:hover {
+    background: linear-gradient(135deg, var(--bright-blue), var(--accent-blue));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(59, 130, 246, 0.5);
+  }
+
+  .btn-secondary {
+    background: linear-gradient(135deg, var(--secondary-blue), var(--primary-blue));
+    color: var(--text-light);
+    border: 2px solid var(--accent-blue);
+  }
+
+  .btn-secondary:hover {
+    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(59, 130, 246, 0.3);
+    border-color: var(--bright-blue);
+  }
+
+  @media (max-width: 650px) {
+    .status-container {
+      padding: 30px 20px;
+    }
+
+    .status-icon {
+      width: 100px;
+      height: 100px;
+      font-size: 3rem;
+    }
+
+    .status-container h2 {
+      font-size: 1.5rem;
+    }
+
+    .action-buttons {
+      flex-direction: column;
+    }
+
+    .btn {
+      width: 100%;
+    }
+
+    .status-details {
+      padding: 15px;
+    }
+
+    .detail-item {
+      font-size: 0.95rem;
+    }
+  }
+</style>
+
+{{>footer2}}
+    <div class="status-details">
+      <div class="detail-item">
+        <i class="fas fa-check-circle"></i>
+        <span>Operación completada exitosamente</span>
+      </div>
+      <div class="detail-item">
+        <i class="fas fa-database"></i>
+        <span>Registros eliminados del sistema</span>
+      </div>
+      <div class="detail-item">
+        <i class="fas fa-shield-alt"></i>
+        <span>Cambios registrados en auditoría</span>
+      </div>
+    </div>
+    <div class="action-buttons">
+      <button class="btn btn-primary" onclick="location.href='/'">
+        <i class="fas fa-home"></i> Ir al Inicio
+      </button>
+      <button class="btn btn-secondary" onclick="location.href='/users'">
+        <i class="fas fa-users"></i> Ver Usuarios
+      </button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .status-message-section {
+    min-height: calc(100vh - 200px);
+    padding: 80px 0;
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .status-message-section > div {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .status-container {
+    background: linear-gradient(135deg, var(--dark-grey), var(--secondary-dark));
+    border: 2px solid var(--blood-red);
+    border-radius: 15px;
+    box-shadow: 0 10px 50px rgba(139, 0, 0, 0.5);
+    max-width: 600px;
+    width: 100%;
+    padding: 50px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .status-container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(139, 0, 0, 0.1) 0%, transparent 70%);
+    animation: pulse 4s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+  }
+
+  .status-icon {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    position: relative;
+    z-index: 1;
+    animation: iconPulse 2s infinite;
+  }
+
+  .status-icon.deleted {
+    background: linear-gradient(135deg, var(--blood-red), var(--crimson));
+    color: var(--text-light);
+    box-shadow: 0 0 40px rgba(220, 20, 60, 0.6);
+    border: 3px solid var(--burgundy);
+  }
+
+  @keyframes iconPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+
+  .status-container h2 {
+    color: var(--text-light);
+    font-size: 2rem;
+    margin-bottom: 15px;
+    text-shadow: 0 0 10px var(--blood-red);
+    position: relative;
+    z-index: 1;
+  }
+
+  .status-message {
+    color: var(--text-grey);
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+  }
+
+  .status-details {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--burgundy);
+    border-radius: 10px;
+    padding: 25px;
+    margin: 30px 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .detail-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 0;
+    color: var(--text-light);
+    border-bottom: 1px solid var(--burgundy);
+  }
+
+  .detail-item:last-child {
+    border-bottom: none;
+  }
+
+  .detail-item i {
+    color: var(--crimson);
+    font-size: 1.2rem;
+    width: 25px;
+    text-align: center;
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .btn {
+    flex: 1;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--blood-red), var(--burgundy));
+    color: var(--text-light);
+    border: 1px solid var(--crimson);
+    box-shadow: 0 4px 20px rgba(139, 0, 0, 0.5);
+  }
+
+  .btn-primary:hover {
+    background: linear-gradient(135deg, var(--crimson), var(--blood-red));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(220, 20, 60, 0.7);
+  }
+
+  .btn-secondary {
+    background: linear-gradient(135deg, var(--dark-grey), var(--secondary-dark));
+    color: var(--text-light);
+    border: 1px solid var(--burgundy);
+  }
+
+  .btn-secondary:hover {
+    background: linear-gradient(135deg, var(--secondary-dark), var(--dark-grey));
+    border-color: var(--crimson);
+  }
+
+  @media (max-width: 650px) {
+    .status-container {
+      padding: 40px 25px;
+    }
+
+    .status-container h2 {
+      font-size: 1.5rem;
+    }
+
+    .status-icon {
+      width: 100px;
+      height: 100px;
+      font-size: 3rem;
+    }
+
+    .action-buttons {
+      flex-direction: column;
+    }
+  }
+</style>
+
+{{>footer2}}

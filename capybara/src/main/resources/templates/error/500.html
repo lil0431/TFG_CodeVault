@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>500 - Error Interno | CodeVault</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #0f172a;
+            --secondary-blue: #1e293b;
+            --accent-blue: #3b82f6;
+            --bright-blue: #60a5fa;
+            --dark-bg: #0a0e27;
+            --text-light: #e2e8f0;
+            --text-grey: #94a3b8;
+        }
+
+        body {
+            font-family: 'Fira Code', 'Courier New', monospace;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--primary-blue) 100%);
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(0deg, rgba(59, 130, 246, 0.03) 0px, rgba(59, 130, 246, 0.03) 1px, transparent 1px, transparent 2px);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-container {
+            max-width: 800px;
+            text-align: center;
+            padding: 40px;
+            position: relative;
+            z-index: 1;
+            background: rgba(15, 23, 42, 0.95);
+            border-radius: 20px;
+            border: 3px solid var(--accent-blue);
+            box-shadow: 0 20px 60px rgba(59, 130, 246, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .explosion-icon {
+            font-size: 4em;
+            color: var(--bright-blue);
+            margin-bottom: 20px;
+            animation: explode 2s ease-in-out infinite;
+        }
+
+        @keyframes explode {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.7;
+            }
+        }
+
+        .error-svg {
+            width: 300px;
+            height: 300px;
+            margin: 30px auto;
+            animation: shake 1s ease-in-out infinite;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0) rotate(0deg); }
+            10% { transform: translateX(-5px) rotate(-2deg); }
+            20% { transform: translateX(5px) rotate(2deg); }
+            30% { transform: translateX(-5px) rotate(-2deg); }
+            40% { transform: translateX(5px) rotate(2deg); }
+            50% { transform: translateX(0) rotate(0deg); }
+        }
+
+        .explosion-wave {
+            animation: wave 1.5s ease-out infinite;
+        }
+
+        @keyframes wave {
+            0% {
+                r: 20;
+                opacity: 1;
+            }
+            100% {
+                r: 120;
+                opacity: 0;
+            }
+        }
+
+        .explosion-flash {
+            animation: flash 0.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes flash {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0.3;
+            }
+        }
+
+        .spark {
+            animation: spark 1s ease-out infinite;
+        }
+
+        @keyframes spark {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+        }
+
+        .error-code {
+            font-size: 10em;
+            font-weight: bold;
+            color: var(--bright-blue);
+            text-shadow: 
+                0 0 20px rgba(59, 130, 246, 0.8),
+                0 0 40px rgba(96, 165, 250, 0.6),
+                0 0 60px rgba(59, 130, 246, 0.4);
+            margin: 20px 0;
+            line-height: 1;
+            animation: flicker 2s ease-in-out infinite;
+        }
+
+        @keyframes flicker {
+            0%, 100% {
+                opacity: 1;
+                text-shadow: 
+                    0 0 20px rgba(59, 130, 246, 0.8),
+                    0 0 40px rgba(96, 165, 250, 0.6),
+                    0 0 60px rgba(59, 130, 246, 0.4);
+            }
+            50% {
+                opacity: 0.8;
+                text-shadow: 
+                    0 0 10px rgba(59, 130, 246, 0.6),
+                    0 0 20px rgba(96, 165, 250, 0.4),
+                    0 0 30px rgba(59, 130, 246, 0.2);
+            }
+        }
+
+        .error-title {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: var(--bright-blue);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .error-message {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        .error-description {
+            font-size: 1.1em;
+            color: var(--text-grey);
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .warning-box {
+            background: rgba(59, 130, 246, 0.1);
+            border: 2px solid var(--accent-blue);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+
+        .warning-box i {
+            font-size: 2em;
+            color: var(--bright-blue);
+            margin-bottom: 10px;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--bright-blue) 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--secondary-blue) 0%, var(--primary-blue) 100%);
+            color: var(--text-light);
+            border: 2px solid var(--accent-blue);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+            border-color: var(--bright-blue);
+        }
+
+        @media (max-width: 768px) {
+            .error-container {
+                padding: 20px;
+                margin: 20px;
+            }
+
+            .error-code {
+                font-size: 6em;
+            }
+
+            .error-title {
+                font-size: 1.8em;
+            }
+
+            .error-svg {
+                width: 200px;
+                height: 200px;
+            }
+
+            .button-container {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="explosion-icon">
+            <i class="fas fa-bomb"></i>
+        </div>
+
+        <!-- Animated SVG Explosion -->
+        <svg class="error-svg" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+            <!-- Background explosion waves -->
+            <circle class="explosion-wave" cx="150" cy="150" r="20" fill="none" stroke="#ff4500" stroke-width="3" opacity="0.8"/>
+            <circle class="explosion-wave" cx="150" cy="150" r="20" fill="none" stroke="#dc143c" stroke-width="3" opacity="0.6" style="animation-delay: 0.3s"/>
+            <circle class="explosion-wave" cx="150" cy="150" r="20" fill="none" stroke="#ff8c00" stroke-width="3" opacity="0.4" style="animation-delay: 0.6s"/>
+            
+            <!-- Central explosion core -->
+            <circle cx="150" cy="150" r="40" fill="url(#explosionGradient)" class="explosion-flash"/>
+            
+            <!-- Explosion gradient -->
+            <defs>
+                <radialGradient id="explosionGradient">
+                    <stop offset="0%" style="stop-color:#ff4500;stop-opacity:1" />
+                    <stop offset="50%" style="stop-color:#dc143c;stop-opacity:0.8" />
+                    <stop offset="100%" style="stop-color:#8b0000;stop-opacity:0" />
+                </radialGradient>
+            </defs>
+            
+            <!-- Warning symbol -->
+            <polygon points="150,80 180,140 120,140" fill="#ffcc00" stroke="#ff4500" stroke-width="2"/>
+            <circle cx="150" cy="125" r="4" fill="#ff4500"/>
+            <line x1="150" y1="105" x2="150" y2="115" stroke="#ff4500" stroke-width="3" stroke-linecap="round"/>
+            
+            <!-- Sparks -->
+            <circle class="spark" cx="110" cy="110" r="3" fill="#ffcc00" style="animation-delay: 0s"/>
+            <circle class="spark" cx="190" cy="110" r="3" fill="#ff8c00" style="animation-delay: 0.2s"/>
+            <circle class="spark" cx="110" cy="190" r="3" fill="#dc143c" style="animation-delay: 0.4s"/>
+            <circle class="spark" cx="190" cy="190" r="3" fill="#ff4500" style="animation-delay: 0.6s"/>
+            
+            <!-- Broken gear pieces -->
+            <path d="M 120 160 L 110 180 L 100 170" stroke="#666" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <path d="M 180 160 L 190 180 L 200 170" stroke="#666" stroke-width="3" fill="none" stroke-linecap="round"/>
+            
+            <!-- Smoke effect -->
+            <ellipse cx="150" cy="100" rx="20" ry="15" fill="#555" opacity="0.3">
+                <animate attributeName="ry" values="15;25;15" dur="2s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0.3;0.1;0.3" dur="2s" repeatCount="indefinite"/>
+            </ellipse>
+        </svg>
+
+        <div class="error-code">500</div>
+        
+        <h1 class="error-title">¡Sistema Comprometido!</h1>
+        
+        <h2 class="error-message">Fallo Catastrófico del Servidor</h2>
+        
+        <p class="error-description">
+            Hemos detectado un fallo crítico en nuestros sistemas. <br>
+            Los técnicos han sido alertados y están trabajando para restaurar el servicio.
+        </p>
+
+        <div class="warning-box">
+            <i class="fas fa-exclamation-triangle"></i>
+            <p style="margin: 0; font-size: 1.1em;">
+                <strong>ALERTA DE SEGURIDAD:</strong><br>
+                Por favor, no intentes refrescar la página repetidamente. <br>
+                Si el problema persiste, contacta con soporte técnico.
+            </p>
+        </div>
+
+        <div class="button-container">
+            <a href="/" class="btn btn-primary">
+                <i class="fas fa-home"></i>
+                Volver al Inicio
+            </a>
+            <a href="javascript:history.back()" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i>
+                Página Anterior
+            </a>
+        </div>
+    </div>
+</body>
+</html>

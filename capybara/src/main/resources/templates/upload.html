@@ -1,0 +1,503 @@
+{{>header2}}
+{{>csrf}}
+
+<section id="upload" class="upload-section">
+  <div class="container">
+    <div class="upload-header">
+      <div class="header-icon">
+        <i class="fas fa-cloud-upload-alt"></i>
+      </div>
+      <h2>Cargar Binario para Análisis</h2>
+      <p class="header-subtitle">Envía tu binario ELF para análisis forense con Ghidra, Firmas Locales e IA</p>
+    </div>
+
+    <div class="upload-container">
+      <form id="uploadForm" enctype="multipart/form-data" class="upload-form" onsubmit="handleSubmit(event)">
+
+        <div class="form-section">
+          <h3><i class="fas fa-upload"></i> Seleccionar Binario</h3>
+
+          <div class="file-upload-area" id="fileUploadArea">
+            <div class="upload-icon">
+              <i class="fas fa-file-code"></i>
+            </div>
+            <h4>Arrastra tu binario aquí o haz clic para seleccionar</h4>
+            <p class="upload-hint">Máximo 50 MB · Binarios ELF / PE / Mach-O</p>
+            <input type="file" id="binaryFile" name="file" class="file-input" required accept="application/octet-stream,.bin,.elf,.so,.exe">
+          </div>
+
+          <div id="fileInfo" class="file-info hidden">
+            <div class="file-details">
+              <i class="fas fa-check-circle"></i>
+              <div>
+                <span class="file-name" id="selectedFileName"></span>
+                <span class="file-size" id="selectedFileSize"></span>
+              </div>
+            </div>
+            <button type="button" class="btn-clear" onclick="clearFile()">
+              <i class="fas fa-times"></i> Cambiar archivo
+            </button>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3><i class="fas fa-sliders-h"></i> Opciones de Análisis</h3>
+          <p class="section-hint">Selecciona qué motores quieres aplicar a tu binario.</p>
+
+          <div class="option-group local-option">
+            <label class="option-label">
+              <input type="checkbox" name="scan" id="opt_scan" checked onchange="updateCommandPreview()">
+              <span class="option-content">
+                <span class="option-icon"><i class="fas fa-search-plus"></i></span>
+                <span class="option-text">
+                  <strong>Auditoría Local, Riesgos y Grafos <span class="badge-local">Firmas NVD</span></strong>
+                  <small>Escanea contra rules.json, calcula el Risk Score consultando NIST y genera el Call Graph.</small>
+                </span>
+              </span>
+            </label>
+          </div>
+
+          <div class="option-group ai-option">
+            <label class="option-label">
+              <input type="checkbox" name="explain" id="opt_explain" checked onchange="updateApiKeyVisibility()">
+              <span class="option-content">
+                <span class="option-icon"><i class="fas fa-book-open"></i></span>
+                <span class="option-text">
+                  <strong>Explicación del Código <span class="badge-ai">IA</span></strong>
+                  <small>La IA explica qué hace el programa y detalla la lógica de cada función.</small>
+                </span>
+              </span>
+            </label>
+          </div>
+
+          <div class="option-group ai-option">
+            <label class="option-label">
+              <input type="checkbox" name="ai_vulns" id="opt_ai_vulns" checked onchange="updateApiKeyVisibility()">
+              <span class="option-content">
+                <span class="option-icon"><i class="fas fa-bug"></i></span>
+                <span class="option-text">
+                  <strong>Vulnerabilidades (IA) <span class="badge-ai">IA</span></strong>
+                  <small>Identifica malas prácticas y vulnerabilidades lógicas mediante análisis semántico.</small>
+                </span>
+              </span>
+            </label>
+          </div>
+
+          <div class="option-group ai-option">
+            <label class="option-label">
+              <input type="checkbox" name="exploit" id="opt_exploit" onchange="updateApiKeyVisibility()">
+              <span class="option-content">
+                <span class="option-icon"><i class="fas fa-crosshairs"></i></span>
+                <span class="option-text">
+                  <strong>Guía de Explotación <span class="badge-ai">IA</span></strong>
+                  <small>Pasos detallados para probar y explotar vulnerabilidades con GDB y Radare2.</small>
+                </span>
+              </span>
+            </label>
+          </div>
+
+          <div class="option-group ai-option">
+            <label class="option-label">
+              <input type="checkbox" name="mitigate" id="opt_mitigate" onchange="updateApiKeyVisibility()">
+              <span class="option-content">
+                <span class="option-icon"><i class="fas fa-shield-alt"></i></span>
+                <span class="option-text">
+                  <strong>Mitigaciones en C <span class="badge-ai">IA</span></strong>
+                  <small>Propuestas de código seguro para parchear las vulnerabilidades encontradas.</small>
+                </span>
+              </span>
+            </label>
+          </div>
+
+          <div class="option-group extract-option">
+            <label class="option-label">
+              <input type="checkbox" name="asm_only" id="opt_asm_only" onchange="updateCommandPreview()">
+              <span class="option-content">
+                <span class="option-icon"><i class="fas fa-code"></i></span>
+                <span class="option-text">
+                  <strong>Solo Ensamblador <span class="badge-extra">Extracción</span></strong>
+                  <small>Omitir decompilación a C. Acelera el proceso pero reduce el contexto para la IA.</small>
+                </span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-section" id="aiConfigSection">
+          <h3><i class="fas fa-microchip"></i> Configuración del Motor de IA</h3>
+
+          <div class="form-group">
+            <label for="engine"><i class="fas fa-robot"></i> Motor de IA</label>
+            <select id="engine" name="engine" onchange="updateApiKeyHint()">
+              <option value="gemini">Google Gemini 2.5 Flash (Recomendado)</option>
+              <option value="groq">Groq · Llama3/Mixtral (Rápido)</option>
+            </select>
+          </div>
+
+          <div class="form-group" id="apiKeyGroup">
+            <label for="apiKey">
+              <i class="fas fa-key"></i> API Key <span class="badge-optional">Opcional</span>
+            </label>
+            <div class="api-key-wrapper">
+              <input type="password" id="apiKey" name="apiKey" placeholder="Usa la clave por defecto o introduce la tuya">
+              <button type="button" class="btn-toggle-key" onclick="toggleApiKey()" title="Mostrar/Ocultar">
+                <i class="fas fa-eye" id="eyeIcon"></i>
+              </button>
+            </div>
+            <span class="form-hint" id="apiKeyHint">
+              Si dejas este campo en blanco, se usará la API Key configurada en el servidor.
+            </span>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="terms-box">
+            <label class="checkbox-label large">
+              <input type="checkbox" name="acceptTerms" required checked>
+              <span>
+                <i class="fas fa-file-contract"></i>
+                Acepto analizar este binario con fines estrictamente educativos y de auditoría de seguridad.
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary btn-large" id="submitBtn">
+            <i class="fas fa-play-circle"></i> Iniciar Análisis
+          </button>
+          <button type="reset" class="btn btn-secondary btn-large" onclick="resetForm()">
+            <i class="fas fa-times"></i> Limpiar
+          </button>
+        </div>
+
+      </form>
+
+      <div class="info-panel">
+        <div class="info-box">
+          <i class="fas fa-cogs"></i>
+          <h4>Pipeline del Orquestador</h4>
+          <p><strong>1.</strong> Ghidra extrae el código.<br><strong>2.</strong> Se evalúan Firmas Locales.<br><strong>3.</strong> Se consulta el CVSS en NIST NVD.<br><strong>4.</strong> Graphviz & Radare2 dibujan los grafos.<br><strong>5.</strong> La IA analiza el contexto y audita.</p>
+        </div>
+
+        <div class="info-box" id="commandPreview">
+          <i class="fas fa-terminal"></i>
+          <h4>Simulación de Comando</h4>
+          <pre id="cmdPreviewText" style="font-size:0.75rem; color:#93c5fd; word-break:break-all; white-space:pre-wrap; margin:0;"></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  :root {
+    --primary-blue: #0f172a; --secondary-blue: #1e293b; --accent-blue: #3b82f6;
+    --bright-blue: #60a5fa; --dark-bg: #0a0e27; --text-light: #e2e8f0; --text-grey: #94a3b8;
+  }
+  .upload-section { min-height: calc(100vh - 200px); padding: 60px 0; background: linear-gradient(135deg, var(--dark-bg) 0%, var(--primary-blue) 100%); }
+  .upload-section .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+  .upload-header { text-align: center; margin-bottom: 40px; }
+  .header-icon { font-size: 4rem; color: var(--bright-blue); margin-bottom: 15px; filter: drop-shadow(0 0 15px var(--accent-blue)); animation: float 3s ease-in-out infinite; }
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+  .upload-header h2 { font-size: 2.4rem; color: var(--text-light); font-weight: bold; margin-bottom:10px; text-shadow: 0 0 10px var(--accent-blue); }
+  .header-subtitle { font-size: 1.1rem; color: var(--text-grey); }
+  
+  .upload-container { display: grid; grid-template-columns: 1fr 320px; gap: 30px; align-items: start; }
+  .upload-form { background: linear-gradient(135deg, var(--secondary-blue), var(--primary-blue)); border: 2px solid var(--accent-blue); border-radius: 16px; padding: 35px; box-shadow: 0 8px 30px rgba(59, 130, 246, 0.2); }
+  
+  .form-section { margin-bottom: 30px; }
+  .form-section h3 { font-size: 1.2rem; color: var(--text-light); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid rgba(59,130,246,0.3); padding-bottom: 10px; }
+  .form-section h3 i { color: var(--bright-blue); }
+  .section-hint { font-size: 0.9rem; color: var(--text-grey); margin: -10px 0 15px; }
+
+  /* Upload Area */
+  .file-upload-area { border: 2px dashed var(--accent-blue); border-radius: 12px; padding: 40px 20px; text-align: center; cursor: pointer; background: rgba(59, 130, 246, 0.05); transition: all 0.3s; }
+  .file-upload-area:hover { border-color: var(--bright-blue); background: rgba(59, 130, 246, 0.1); }
+  .upload-icon { font-size: 2.5rem; color: var(--bright-blue); margin-bottom: 10px; }
+  .file-upload-area h4 { color: var(--text-light); margin-bottom: 5px; }
+  .upload-hint { color: var(--text-grey); font-size: 0.9rem; }
+  .file-input { display: none; }
+
+  .file-info { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; padding: 12px 16px; background: rgba(59, 130, 246, 0.1); border: 1px solid var(--accent-blue); border-radius: 8px; }
+  .file-info.hidden { display: none; }
+  .file-details { display: flex; align-items: center; gap: 10px; color: var(--bright-blue); }
+  .file-name { font-weight: bold; color: var(--text-light); display: block; }
+  .file-size { font-size: 0.85rem; color: var(--text-grey); }
+  .btn-clear { background: none; border: 1px solid #ef4444; color: #ef4444; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; transition: 0.2s; }
+  .btn-clear:hover { background: rgba(239,68,68,0.1); }
+
+  /* Checkboxes de opciones */
+  .option-group { border: 1px solid rgba(59,130,246,0.25); border-radius: 10px; margin-bottom: 10px; transition: border-color 0.2s, background 0.2s; }
+  .option-group:has(input:checked) { border-color: var(--accent-blue); background: rgba(59,130,246,0.08); }
+  .option-label { display: flex; align-items: flex-start; gap: 14px; padding: 14px 16px; cursor: pointer; width: 100%; }
+  .option-label input[type="checkbox"] { margin-top: 4px; width: 18px; height: 18px; accent-color: var(--accent-blue); cursor: pointer; flex-shrink: 0; }
+  .option-content { display: flex; align-items: flex-start; gap: 12px; flex: 1; }
+  .option-icon { font-size: 1.3rem; color: var(--bright-blue); padding-top: 2px; flex-shrink: 0; }
+  .option-text strong { display: flex; align-items: center; gap: 8px; color: var(--text-light); font-size: 1rem; margin-bottom: 3px; }
+  .option-text small { color: var(--text-grey); font-size: 0.88rem; line-height: 1.4; display: block; }
+
+  /* Badges */
+  .badge-ai, .badge-local, .badge-extra, .badge-optional { font-size: 0.7rem; padding: 2px 7px; border-radius: 4px; font-weight: bold; text-transform: uppercase; }
+  .badge-ai { background: rgba(59,130,246,0.2); color: var(--bright-blue); border: 1px solid var(--accent-blue); }
+  .badge-local { background: rgba(34,197,94,0.15); color: #4ade80; border: 1px solid #22c55e; }
+  .badge-extra { background: rgba(168,85,247,0.15); color: #c084fc; border: 1px solid #a855f7; }
+  .badge-optional { background: rgba(148,163,184,0.15); color: var(--text-grey); border: 1px solid #475569; }
+
+  /* Inputs y forms */
+  .form-group { margin-bottom: 20px; }
+  .form-group label { display: flex; align-items: center; gap: 8px; font-size: 1rem; color: var(--text-light); font-weight: 600; margin-bottom: 8px; }
+  .form-group label i { color: var(--bright-blue); }
+  .form-group select, .form-group input[type="password"], .form-group input[type="text"] { width: 100%; padding: 12px 16px; background: rgba(0, 0, 0, 0.4); border: 2px solid var(--accent-blue); border-radius: 8px; color: var(--text-light); font-size: 1rem; font-family: 'Fira Code', monospace; transition: 0.3s; box-sizing: border-box; }
+  .form-group select:focus, .form-group input:focus { outline: none; border-color: var(--bright-blue); box-shadow: 0 0 10px rgba(59, 130, 246, 0.3); }
+  
+  .api-key-wrapper { display: flex; position: relative; }
+  .api-key-wrapper input { border-radius: 8px 0 0 8px !important; flex: 1; }
+  .btn-toggle-key { background: rgba(59,130,246,0.15); border: 2px solid var(--accent-blue); border-left: none; color: var(--bright-blue); padding: 0 14px; cursor: pointer; border-radius: 0 8px 8px 0; transition: 0.2s; }
+  .btn-toggle-key:hover { background: rgba(59,130,246,0.3); }
+  .form-hint { font-size: 0.88rem; color: var(--text-grey); margin-top: 6px; display: block; }
+  .form-hint a { color: var(--bright-blue); }
+
+  .terms-box { background: rgba(59,130,246,0.05); border: 1px solid rgba(59,130,246,0.3); border-radius: 10px; padding: 16px; }
+  .checkbox-label.large { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; color: var(--text-grey); font-size: 0.95rem; line-height: 1.5; }
+  .checkbox-label.large input { margin-top: 3px; width: 18px; height: 18px; accent-color: var(--accent-blue); flex-shrink: 0; }
+
+  /* Actions */
+  .form-actions { display: flex; gap: 15px; margin-top: 20px; }
+  .btn { padding: 14px 24px; border-radius: 8px; font-weight: bold; font-size: 1.05rem; cursor: pointer; border: none; transition: 0.3s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+  .btn-primary { background: linear-gradient(135deg, var(--accent-blue), var(--bright-blue)); color: white; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3); flex: 2; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5); }
+  .btn-primary:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+  .btn-secondary { background: transparent; color: var(--text-light); border: 2px solid var(--accent-blue); flex: 1; }
+  .btn-secondary:hover { border-color: var(--bright-blue); background: rgba(59,130,246,0.1); }
+
+  /* Panel lateral */
+  .info-panel { display: flex; flex-direction: column; gap: 16px; }
+  .info-box { background: linear-gradient(135deg, var(--secondary-blue), var(--primary-blue)); border: 2px solid var(--accent-blue); border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.1); }
+  .info-box > i { font-size: 1.6rem; color: var(--bright-blue); margin-bottom: 10px; display: block; }
+  .info-box h4 { font-size: 1.05rem; color: var(--text-light); margin-bottom: 8px; }
+  .info-box p { font-size: 0.9rem; color: var(--text-grey); line-height: 1.5; margin: 0; }
+
+  #aiConfigSection { transition: opacity 0.3s, max-height 0.4s; overflow: hidden; }
+  #aiConfigSection.hidden-section { opacity: 0.3; pointer-events: none; }
+
+  @media (max-width: 900px) { .upload-container { grid-template-columns: 1fr; } .form-actions { flex-direction: column; } }
+</style>
+
+<script>
+  // ─── GESTIÓN DE ARCHIVOS (Drag & Drop) ──────────────────────────────
+  const fileUploadArea = document.getElementById('fileUploadArea');
+  const fileInput = document.getElementById('binaryFile');
+  const fileInfo = document.getElementById('fileInfo');
+
+  fileUploadArea.addEventListener('click', () => fileInput.click());
+
+  fileUploadArea.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    fileUploadArea.style.borderColor = '#60a5fa';
+    fileUploadArea.style.background = 'rgba(59, 130, 246, 0.15)';
+  });
+
+  fileUploadArea.addEventListener('dragleave', () => {
+    fileUploadArea.style.borderColor = '#3b82f6';
+    fileUploadArea.style.background = 'rgba(59, 130, 246, 0.05)';
+  });
+
+  fileUploadArea.addEventListener('drop', (e) => {
+    e.preventDefault();
+    fileUploadArea.style.borderColor = '#3b82f6';
+    fileUploadArea.style.background = 'rgba(59, 130, 246, 0.05)';
+    if (e.dataTransfer.files.length > 0) {
+      fileInput.files = e.dataTransfer.files;
+      updateFileInfo();
+    }
+  });
+
+  fileInput.addEventListener('change', updateFileInfo);
+
+  function updateFileInfo() {
+    if (fileInput.files.length > 0) {
+      const file = fileInput.files[0];
+      document.getElementById('selectedFileName').textContent = file.name;
+      document.getElementById('selectedFileSize').textContent = formatFileSize(file.size);
+      fileInfo.classList.remove('hidden');
+      updateCommandPreview();
+    }
+  }
+
+  function clearFile() {
+    fileInput.value = '';
+    fileInfo.classList.add('hidden');
+    updateCommandPreview();
+  }
+
+  function formatFileSize(bytes) {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+  }
+
+  // ─── GESTIÓN DE UI E IA ─────────────────────────────────────────────
+  function toggleApiKey() {
+    const input = document.getElementById('apiKey');
+    const icon = document.getElementById('eyeIcon');
+    if (input.type === 'password') {
+      input.type = 'text';
+      icon.className = 'fas fa-eye-slash';
+    } else {
+      input.type = 'password';
+      icon.className = 'fas fa-eye';
+    }
+  }
+
+  function updateApiKeyHint() {
+    const engine = document.getElementById('engine').value;
+    const hint = document.getElementById('apiKeyHint');
+    const apiKeyGroup = document.getElementById('apiKeyGroup');
+
+    apiKeyGroup.style.display = '';
+    const hints = {
+	gemini: 'Deja en blanco para usar la clave Gemini por defecto del servidor.',
+	groq: 'Deja en blanco para usar la clave Groq por defecto del servidor.'
+    };
+    hint.innerHTML = hints[engine] || '';
+    updateCommandPreview();
+  }
+
+  function updateApiKeyVisibility() {
+    const aiSelected = ['opt_explain','opt_ai_vulns','opt_exploit','opt_mitigate']
+      .some(id => document.getElementById(id).checked);
+
+    const aiSection = document.getElementById('aiConfigSection');
+    if (aiSelected) {
+      aiSection.classList.remove('hidden-section');
+    } else {
+      aiSection.classList.add('hidden-section');
+    }
+    updateCommandPreview();
+  }
+
+  function updateCommandPreview() {
+    const filename = fileInput.files.length > 0 ? fileInput.files[0].name : '<binario>';
+    const parts = ['python3 tfg_orchestrator.py', filename];
+
+    if (document.getElementById('opt_asm_only').checked) parts.push('--asm-only');
+    if (document.getElementById('opt_scan').checked) parts.push('--scan --score --graph');
+    if (document.getElementById('opt_explain').checked) parts.push('--explain');
+    if (document.getElementById('opt_ai_vulns').checked) parts.push('--ai-vulns');
+    if (document.getElementById('opt_exploit').checked) parts.push('--exploit');
+    if (document.getElementById('opt_mitigate').checked) parts.push('--mitigate');
+
+    const aiSelected = ['opt_explain','opt_ai_vulns','opt_exploit','opt_mitigate']
+      .some(id => document.getElementById(id).checked);
+
+    if (aiSelected) {
+      const engine = document.getElementById('engine').value;
+      parts.push('--ai-engine', engine);
+    }
+
+    document.getElementById('cmdPreviewText').textContent = parts.join(' ');
+  }
+
+  // Listeners de actualización dinámica
+  ['opt_scan','opt_explain','opt_ai_vulns','opt_exploit','opt_mitigate','opt_asm_only'].forEach(id => {
+    document.getElementById(id).addEventListener('change', () => {
+      updateApiKeyVisibility();
+      updateCommandPreview();
+    });
+  });
+  document.getElementById('engine').addEventListener('change', updateCommandPreview);
+
+  function resetForm() {
+    setTimeout(() => {
+      fileInfo.classList.add('hidden');
+      updateApiKeyVisibility();
+      updateApiKeyHint();
+      updateCommandPreview();
+    }, 50);
+  }
+
+  // ─── ENVÍO DEL FORMULARIO A SPRING BOOT ─────────────────────────────
+  async function handleSubmit(event) {
+    event.preventDefault();
+
+    if (fileInput.files.length === 0) {
+      alert('Por favor, selecciona o arrastra un archivo binario primero.');
+      return;
+    }
+
+    // Recoger valores de los checkbox
+    const scan     = document.getElementById('opt_scan').checked;
+    const explain  = document.getElementById('opt_explain').checked;
+    const aiVulns  = document.getElementById('opt_ai_vulns').checked;
+    const exploit  = document.getElementById('opt_exploit').checked;
+    const mitigate = document.getElementById('opt_mitigate').checked;
+    const asmOnly  = document.getElementById('opt_asm_only').checked;
+
+    if (!scan && !explain && !aiVulns && !exploit && !mitigate) {
+      alert('Debes seleccionar al menos una opción de análisis (IA o Auditoría Local).');
+      return;
+    }
+
+    const apiKey = document.getElementById('apiKey').value.trim();
+    const engine = document.getElementById('engine').value;
+
+    const csrfToken  = document.querySelector('meta[name="_csrf"]')?.content;
+    const csrfHeader = document.querySelector('meta[name="_csrf_header"]')?.content || 'X-CSRF-TOKEN';
+
+    const formData = new FormData();
+    formData.append('file', fileInput.files[0]);
+    formData.append('apiKey', apiKey);  // Puede ir vacío, el backend usa default
+    formData.append('engine', engine);
+    
+    // Convertimos los booleanos de forma explícita para Spring Boot
+    formData.append('scan', scan);
+    formData.append('explain', explain);
+    formData.append('ai_vulns', aiVulns);
+    formData.append('exploit', exploit);
+    formData.append('mitigate', mitigate);
+    formData.append('asm_only', asmOnly);
+
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Subiendo binario al servidor...';
+
+    const headers = { 'X-Requested-With': 'XMLHttpRequest' };
+    if (csrfToken) headers[csrfHeader] = csrfToken;
+
+    try {
+      const response = await fetch('/api/analysis/upload', {
+        method: 'POST',
+        body: formData,
+        headers
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Error interno del servidor al subir el archivo');
+      }
+
+      submitBtn.innerHTML = '<i class="fas fa-check"></i> ¡Subida completada!';
+      
+      // Redirigimos a Mis Análisis indicando el ID recién creado
+      setTimeout(() => {
+        window.location.href = '/my-analyses?analysisId=' + data.analysisId;
+      }, 800);
+
+    } catch (error) {
+      alert('❌ Error al subir el binario: ' + error.message);
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = '<i class="fas fa-play-circle"></i> Iniciar Análisis';
+    }
+  }
+
+  // Inicialización al cargar la página
+  updateApiKeyVisibility();
+  updateApiKeyHint();
+  updateCommandPreview();
+</script>
+
+{{>footer2}}

@@ -1,0 +1,28 @@
+2026-05-22 21:17:52.054692+02:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "ERROR_MESSAGE CHARACTER VARYING(255)": "U&'Orquestador fall\\00f3: [*] FASE 1: Extrayendo c\\00f3digo con Ghidra...\\000a[*... (2708)"; SQL statement:
+update analysis set analysis_options=?,binary_data=?,binary_name=?,completed_at=?,created_at=?,error_message=?,file_size=?,json_report=?,pdf_report=?,risk_level=?,status=?,user_id=? where id=? [22001-224]
+2026-05-22 21:26:31.250548+02:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "ERROR_MESSAGE CHARACTER VARYING(255)": "U&'Orquestador fall\\00f3: [*] FASE 1: Extrayendo c\\00f3digo con Ghidra...\\000a[*... (2708)"; SQL statement:
+update analysis set analysis_options=?,binary_data=?,binary_name=?,completed_at=?,created_at=?,error_message=?,file_size=?,json_report=?,pdf_report=?,risk_level=?,status=?,user_id=? where id=? [22001-224]
+2026-05-22 22:19:27.088607+02:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "ERROR_MESSAGE CHARACTER VARYING(255)": "U&'Orquestador fall\\00f3 con exit code 1:\\000a[*] FASE 1: Extrayendo c\\00f3digo ... (2724)"; SQL statement:
+update analysis set analysis_options=?,binary_data=?,binary_name=?,completed_at=?,created_at=?,error_message=?,file_size=?,json_report=?,pdf_report=?,risk_level=?,status=?,user_id=? where id=? [22001-224]
+2026-05-22 22:19:27.159055+02:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "ERROR_MESSAGE CHARACTER VARYING(255)": "U&'Orquestador fall\\00f3 con exit code 1:\\000a[*] FASE 1: Extrayendo c\\00f3digo ... (2724)"; SQL statement:
+update analysis set analysis_options=?,binary_data=?,binary_name=?,completed_at=?,created_at=?,error_message=?,file_size=?,json_report=?,pdf_report=?,risk_level=?,status=?,user_id=? where id=? [22001-224]
+2026-06-15 01:26:48.110601+02:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Valor demasiado largo para la columna "ERROR_MESSAGE CHARACTER VARYING(255)": "U&'El orquestador fall\\00f3 (exit 1)\\000a[*] FASE 1: Extrayendo c\\fffddigo con G... (1146)"
+Value too long for column "ERROR_MESSAGE CHARACTER VARYING(255)": "U&'El orquestador fall\\00f3 (exit 1)\\000a[*] FASE 1: Extrayendo c\\fffddigo con G... (1146)"; SQL statement:
+update analysis set analysis_options=?,binary_data=?,binary_name=?,completed_at=?,created_at=?,error_message=?,file_size=?,json_report=?,pdf_report=?,risk_level=?,status=?,user_id=? where id=? [22001-224]
+2026-06-15 01:36:00.982802+02:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Valor demasiado largo para la columna "ERROR_MESSAGE CHARACTER VARYING(255)": "U&'El orquestador fall\\00f3 (exit 1)\\000a[*] FASE 1: Extrayendo c\\fffddigo con G... (1146)"
+Value too long for column "ERROR_MESSAGE CHARACTER VARYING(255)": "U&'El orquestador fall\\00f3 (exit 1)\\000a[*] FASE 1: Extrayendo c\\fffddigo con G... (1146)"; SQL statement:
+update analysis set analysis_options=?,binary_data=?,binary_name=?,completed_at=?,created_at=?,error_message=?,file_size=?,json_report=?,pdf_report=?,risk_level=?,status=?,user_id=? where id=? [22001-224]
+2026-06-15 01:46:08.330010+02:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Valor demasiado largo para la columna "ERROR_MESSAGE CHARACTER VARYING(255)": "U&'El orquestador fall\\00f3 (exit 1)\\000a[*] FASE 1: Extrayendo c\\fffddigo con G... (1146)"
+Value too long for column "ERROR_MESSAGE CHARACTER VARYING(255)": "U&'El orquestador fall\\00f3 (exit 1)\\000a[*] FASE 1: Extrayendo c\\fffddigo con G... (1146)"; SQL statement:
+update analysis set analysis_options=?,binary_data=?,binary_name=?,completed_at=?,created_at=?,error_message=?,file_size=?,json_report=?,pdf_report=?,risk_level=?,status=?,user_id=? where id=? [22001-224]
+2026-06-15 01:57:14.618845+02:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Valor demasiado largo para la columna "ERROR_MESSAGE CHARACTER VARYING(255)": "U&'El orquestador fall\\00f3 (exit 1)\\000a[*] FASE 1: Extrayendo c\\fffddigo con G... (1146)"
+Value too long for column "ERROR_MESSAGE CHARACTER VARYING(255)": "U&'El orquestador fall\\00f3 (exit 1)\\000a[*] FASE 1: Extrayendo c\\fffddigo con G... (1146)"; SQL statement:
+update analysis set analysis_options=?,binary_data=?,binary_name=?,completed_at=?,created_at=?,error_message=?,file_size=?,json_report=?,pdf_report=?,risk_level=?,status=?,user_id=? where id=? [22001-224]
