@@ -1,0 +1,319 @@
+{
+    "vulnerabilidades": [
+        {
+            "id": "CWE-120",
+            "nombre": "Buffer Copy without Checking Size (Classic Buffer Overflow)",
+            "keywords": ["gets", "strcpy", "strcat", "sprintf", "scanf", "read_input", "buffer"],
+            "severidad": "CRITICAL",
+            "consejo": "Usa versiones seguras como fgets, strncpy o snprintf."
+        },
+        {
+            "id": "CWE-134",
+            "nombre": "Use of Externally-Controlled Format String",
+            "keywords": ["printf", "sprintf", "fprintf", "syslog", "vsnprintf", "vfprintf"],
+            "severidad": "HIGH",
+            "consejo": "Nunca pases variables directamente al primer argumento. Usa printf(\"%s\", var)."
+        },
+        {
+            "id": "CWE-78",
+            "nombre": "Improper Neutralization of Special Elements used in an OS Command",
+            "keywords": ["system", "execve", "popen", "execl", "execvp", "execle", "sh", "bash"],
+            "severidad": "CRITICAL",
+            "consejo": "Evita llamadas al sistema. Usa APIs nativas de la librería estándar."
+        },
+        {
+            "id": "CWE-259",
+            "nombre": "Use of Hardcoded Password",
+            "keywords": ["admin", "password", "clave", "secret", "root", "1234", "master", "guest", "oracle", "db_pass"],
+            "severidad": "HIGH",
+            "consejo": "Usa variables de entorno o sistemas de gestión de secretos."
+        },
+        {
+            "id": "CWE-415",
+            "nombre": "Double Free",
+            "keywords": ["free", "realloc"],
+            "severidad": "HIGH",
+            "consejo": "Asegúrate de poner el puntero a NULL después de liberar memoria para evitar liberar dos veces la misma dirección."
+        },
+        {
+            "id": "CWE-416",
+            "nombre": "Use After Free",
+            "keywords": ["free", "malloc"],
+            "severidad": "CRITICAL",
+            "consejo": "Se detecta el uso de memoria que ha sido liberada previamente. Puede llevar a ejecución de código arbitrario."
+        },
+        {
+            "id": "CWE-190",
+            "nombre": "Integer Overflow or Wraparound",
+            "keywords": ["uint", "ushort", "unsigned short", "unsigned int", "size_t"],
+            "severidad": "MEDIUM",
+            "consejo": "Verifica que las operaciones aritméticas no excedan el límite del tipo de dato antes de usarlas en malloc o índices."
+        },
+        {
+            "id": "CWE-242",
+            "nombre": "Use of Inherently Dangerous Function",
+            "keywords": ["gets", "tmpnam", "mktemp", "tempnam"],
+            "severidad": "HIGH",
+            "consejo": "Estas funciones son peligrosas por diseño y han sido eliminadas de estándares modernos. Usa mkstemp."
+        },
+        {
+            "id": "CWE-327",
+            "nombre": "Use of a Broken or Risky Cryptographic Algorithm",
+            "keywords": ["md5", "sha1", "des", "rc4", "arc4", "blowfish"],
+            "severidad": "MEDIUM",
+            "consejo": "Usa algoritmos modernos como AES-256 o SHA-3."
+        },
+        {
+            "id": "CWE-338",
+            "nombre": "Use of Cryptographically Weak Pseudo-Random Number Generator (PRNG)",
+            "keywords": ["rand", "srand", "random"],
+            "severidad": "MEDIUM",
+            "consejo": "Usa /dev/urandom o APIs criptográficas como getrandom() en Linux."
+        },
+        {
+            "id": "CWE-476",
+            "nombre": "NULL Pointer Dereference",
+            "keywords": ["null", "0x0"],
+            "severidad": "MEDIUM",
+            "consejo": "Verifica siempre que el puntero devuelto por funciones como malloc no sea NULL antes de usarlo."
+        },
+        {
+            "id": "CWE-676",
+            "nombre": "Use of Potentially Dangerous Function",
+            "keywords": ["vfork", "strtok", "asctime", "ctime"],
+            "severidad": "LOW",
+            "consejo": "Estas funciones no son seguras en entornos multihilo o tienen alternativas más robustas."
+        },
+        {
+            "id": "CWE-732",
+            "nombre": "Incorrect Permission Assignment for Critical Resource",
+            "keywords": ["chmod", "chown", "umask", "0777", "777"],
+            "severidad": "HIGH",
+            "consejo": "No asignes permisos de lectura/escritura/ejecución global (777) a archivos sensibles."
+        },
+        {
+            "id": "CWE-916",
+            "nombre": "Use of Password Hash with Insufficient Computational Effort",
+            "keywords": ["crypt", "crypt_r"],
+            "severidad": "MEDIUM",
+            "consejo": "Usa funciones de hash con sal (salt) y factor de trabajo como Argon2 o Bcrypt."
+        },
+        {
+            "id": "Anti-Debug",
+            "nombre": "Anti-Debugging Technique Detected",
+            "keywords": ["ptrace", "isdebuggerpresent", "int3", "cpuid", "sigtrap"],
+            "severidad": "INFO",
+            "consejo": "El binario intenta detectar si está siendo analizado. Esto es común en malware y retos de Reversing."
+        },
+        {
+            "id": "CWE-807",
+            "nombre": "Reliance on Untrusted Inputs in a Security Decision",
+            "keywords": ["getenv", "getopt", "argv"],
+            "severidad": "MEDIUM",
+            "consejo": "No confíes en variables de entorno o argumentos de entrada para decisiones de privilegios."
+        },
+        {
+            "id": "CWE-665",
+            "nombre": "Improper Initialization",
+            "keywords": ["memset", "bzero"],
+            "severidad": "LOW",
+            "consejo": "Asegúrate de inicializar estructuras de datos sensibles antes de su uso."
+        },
+        {
+            "id": "CWE-467",
+            "nombre": "Use of sizeof() on a Pointer Type",
+            "keywords": ["sizeof"],
+            "severidad": "MEDIUM",
+            "consejo": "Verifica que sizeof se aplique al objeto o tipo, no al puntero, especialmente en llamadas a malloc."
+        },
+        {
+            "id": "CWE-273",
+            "nombre": "Improper Check for Dropped Privileges",
+            "keywords": ["setuid", "setgid", "seteuid", "setegid"],
+            "severidad": "HIGH",
+            "consejo": "Verifica siempre el valor de retorno al intentar cambiar de privilegios."
+        },
+        {
+            "id": "CWE-426",
+            "nombre": "Untrusted Search Path",
+            "keywords": ["setenv", "putenv", "path"],
+            "severidad": "HIGH",
+            "consejo": "Cargar librerías o ejecutar comandos con un PATH no controlado puede llevar a escalada de privilegios."
+        },
+        {
+            "id": "CWE-119",
+            "nombre": "Improper Restriction of Operations within the Bounds of a Memory Buffer",
+            "keywords": ["memcpy", "memmove", "bcopy", "wmemcpy"],
+            "severidad": "HIGH",
+            "consejo": "Usa funciones que limiten la longitud o verifica manualmente los límites antes de copiar."
+        },
+        {
+            "id": "CWE-367",
+            "nombre": "Time-of-check Time-of-use (TOCTOU) Race Condition",
+            "keywords": ["access", "stat", "open", "unlink"],
+            "severidad": "MEDIUM",
+            "consejo": "No verifiques propiedades de un archivo antes de abrirlo; ábrelo y maneja el error."
+        },
+        {
+            "id": "CWE-617",
+            "nombre": "Reachable Assertion",
+            "keywords": ["assert", "abort"],
+            "severidad": "LOW",
+            "consejo": "Evita el uso de aserciones en producción, ya que pueden causar denegación de servicio (DoS)."
+        },
+        {
+            "id": "Backdoor-Pattern",
+            "nombre": "Potential Backdoor / Shell access",
+            "keywords": ["/bin/sh", "/bin/bash", "cmd.exe", "/bin/zsh"],
+            "severidad": "CRITICAL",
+            "consejo": "Presencia de rutas de shell en el binario. Investiga si se usan en system() o exec()."
+        },
+        {
+            "id": "CWE-590",
+            "nombre": "Free of Memory not on the Heap",
+            "keywords": ["alloca", "stack"],
+            "severidad": "HIGH",
+            "consejo": "Intentar liberar memoria que reside en la pila (stack) causará un crash crítico."
+        },
+        {
+            "id": "CWE-789",
+            "nombre": "Memory Allocation with Excessive Size Value",
+            "keywords": ["malloc", "calloc", "realloc"],
+            "severidad": "MEDIUM",
+            "consejo": "Controla que el tamaño solicitado para la memoria no sea controlado directamente por el usuario."
+        },
+        {
+            "id": "CWE-822",
+            "nombre": "Untrusted Pointer Dereference",
+            "keywords": ["vtable", "virtual function"],
+            "severidad": "HIGH",
+            "consejo": "En C++, la corrupción de tablas virtuales permite desviar el flujo de ejecución."
+        },
+        {
+            "id": "Network-Audit",
+            "nombre": "Insecure Network Function",
+            "keywords": ["socket", "connect", "bind", "listen", "accept", "send", "recv"],
+            "severidad": "INFO",
+            "consejo": "El programa tiene capacidades de red. Audita la gestión de buffers en los sockets."
+        },
+        {
+            "id": "CWE-20",
+            "nombre": "Improper Input Validation",
+            "keywords": ["getchar", "read", "fread", "msgrcv", "recvfrom"],
+            "severidad": "MEDIUM",
+            "consejo": "Cualquier entrada externa debe ser validada antes de ser procesada."
+        },
+        {
+            "id": "CWE-215",
+            "nombre": "Information Exposure Through Debug Information",
+            "keywords": ["debug", "trace", "dump", "stacktrace"],
+            "severidad": "LOW",
+            "consejo": "Elimina información de depuración detallada en versiones de producción."
+        },
+        {
+            "id": "CWE-312",
+            "nombre": "Cleartext Storage of Sensitive Information",
+            "keywords": ["login", "user", "email", "token", "apikey"],
+            "severidad": "MEDIUM",
+            "consejo": "No almacenes información sensible en texto plano dentro del binario."
+        },
+        {
+            "id": "CWE-404",
+            "nombre": "Improper Resource Shutdown or Release",
+            "keywords": ["close", "fclose", "closedir"],
+            "severidad": "LOW",
+            "consejo": "Asegúrate de cerrar todos los descriptores de archivo para evitar fugas de recursos."
+        },
+        {
+            "id": "CWE-562",
+            "nombre": "Return of Stack Variable Address",
+            "keywords": ["return &"],
+            "severidad": "CRITICAL",
+            "consejo": "Nunca devuelvas la dirección de una variable local de la pila."
+        },
+        {
+            "id": "CWE-114",
+            "nombre": "Process Control",
+            "keywords": ["dlopen", "loadlibrary"],
+            "severidad": "HIGH",
+            "consejo": "Cargar librerías dinámicas basándose en input de usuario es extremadamente peligroso."
+        },
+        {
+            "id": "CWE-330",
+            "nombre": "Use of Insufficiently Random Values",
+            "keywords": ["time(null)", "getpid"],
+            "severidad": "MEDIUM",
+            "consejo": "Usar el tiempo o el PID como semilla para generadores de números aleatorios es predecible."
+        },
+        {
+            "id": "CWE-780",
+            "nombre": "Use of RSA Algorithm without OAEP",
+            "keywords": ["rsa_pkcs1_padding"],
+            "severidad": "MEDIUM",
+            "consejo": "Usa OAEP para el padding en RSA para evitar ataques de oráculo de padding."
+        },
+        {
+            "id": "CWE-248",
+            "nombre": "Uncaught Exception",
+            "keywords": ["throw", "catch", "try"],
+            "severidad": "LOW",
+            "consejo": "Asegúrate de que todas las excepciones posibles sean capturadas para evitar terminaciones abruptas."
+        },
+        {
+            "id": "CWE-129",
+            "nombre": "Improper Validation of Array Index",
+            "keywords": ["index", "array", "offset"],
+            "severidad": "HIGH",
+            "consejo": "Verifica que los índices de array no sean negativos ni mayores que el tamaño del array."
+        },
+        {
+            "id": "CWE-457",
+            "nombre": "Use of Uninitialized Variable",
+            "keywords": ["uninitialized"],
+            "severidad": "MEDIUM",
+            "consejo": "Inicializa siempre las variables locales al declararlas."
+        },
+        {
+            "id": "CWE-321",
+            "nombre": "Use of Hard-coded Cryptographic Key",
+            "keywords": ["key", "aes_key", "des_key", "private_key"],
+            "severidad": "CRITICAL",
+            "consejo": "Nunca guardes claves privadas o simétricas dentro del código fuente."
+        },
+        {
+            "id": "CWE-209",
+            "nombre": "Information Exposure Through an Error Message",
+            "keywords": ["stderr", "perror", "strerror"],
+            "severidad": "LOW",
+            "consejo": "Los mensajes de error no deben revelar detalles internos de la arquitectura del sistema."
+        },
+        {
+            "id": "CWE-469",
+            "nombre": "Use of Pointer Subtraction to Determine Size",
+            "keywords": ["ptr1 - ptr2"],
+            "severidad": "MEDIUM",
+            "consejo": "Restar punteros es seguro solo si ambos apuntan al mismo array."
+        },
+        {
+            "id": "CWE-377",
+            "nombre": "Insecure Temporary File",
+            "keywords": ["/tmp/", "/var/tmp/"],
+            "severidad": "LOW",
+            "consejo": "Usa funciones de creación de archivos temporales seguros que incluyan identificadores aleatorios."
+        },
+        {
+            "id": "CWE-22",
+            "nombre": "Improper Limitation of a Pathname to a Restricted Directory",
+            "keywords": ["../", "..\\", "/etc/passwd"],
+            "severidad": "HIGH",
+            "consejo": "Limpia las rutas de archivo para evitar ataques de Path Traversal."
+        },
+        {
+            "id": "CWE-666",
+            "nombre": "Operation on Resource in Wrong Phase of Lifetime",
+            "keywords": ["double locking", "unlocking"],
+            "severidad": "MEDIUM",
+            "consejo": "Gestiona correctamente el ciclo de vida de los semáforos y mutex."
+        }
+    ]
+}

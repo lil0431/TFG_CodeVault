@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  
+        <style>
+        /* ── Reset y base ───────────────────────────────── */
+        *{box-sizing:border-box;margin:0;padding:0;}
+
+        body{
+            font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+            background:#ffffff;
+            color:#1e293b;
+            font-size:15px;
+            line-height:1.8;
+            margin:0;
+            padding:0;
+        }
+
+        /* ── Cabecera corporativa ────────────────────────── */
+        .report-header{
+            background:#ffffff;
+            border-bottom:4px solid #3b82f6;
+            padding:40px 55px 28px;
+        }
+        .report-header .brand{
+            font-size:11px;
+            letter-spacing:0.18em;
+            text-transform:uppercase;
+            color:#3b82f6;
+            font-weight:700;
+            margin-bottom:10px;
+        }
+        .report-header h1{
+            font-size:26px;
+            font-weight:700;
+            color:#0f172a;
+            letter-spacing:-0.01em;
+            border:none;
+            margin:0 0 6px;
+            padding:0;
+        }
+        .report-header .subtitle{
+            font-size:13px;
+            color:#64748b;
+            margin:0;
+        }
+        .report-header .meta-row{
+            display:flex;
+            gap:30px;
+            margin-top:18px;
+            padding-top:16px;
+            border-top:1px solid #bfdbfe;
+        }
+        .report-header .meta-item{
+            font-size:12px;
+            color:#475569;
+        }
+        .report-header .meta-item strong{
+            display:block;
+            font-size:11px;
+            text-transform:uppercase;
+            letter-spacing:0.1em;
+            color:#3b82f6;
+            margin-bottom:2px;
+        }
+
+        /* ── Cuerpo ─────────────────────────────────────── */
+        .report-body{
+            padding:40px 55px 60px;
+        }
+
+        /* ── Headings ───────────────────────────────────── */
+        h2{
+            font-size:17px;
+            font-weight:700;
+            color:#0f172a;
+            text-transform:uppercase;
+            letter-spacing:0.07em;
+            margin:48px 0 14px;
+            padding-bottom:8px;
+            border-bottom:2px solid #3b82f6;
+        }
+        h3{
+            font-size:14px;
+            font-weight:600;
+            color:#1e293b;
+            margin:28px 0 10px;
+            padding-left:10px;
+            border-left:3px solid #93c5fd;
+        }
+        h4{
+            font-size:13px;
+            font-weight:600;
+            color:#334155;
+            margin:18px 0 6px;
+        }
+        p{
+            margin:10px 0;
+            color:#334155;
+        }
+
+        /* ── Tablas ─────────────────────────────────────── */
+        table{
+            width:100%;
+            border-collapse:collapse;
+            margin:18px 0 28px;
+            font-size:13px;
+        }
+        thead tr{
+            background:#1e40af;
+            color:#ffffff;
+        }
+        thead th{
+            padding:10px 14px;
+            text-align:left;
+            font-weight:600;
+            letter-spacing:0.04em;
+            font-size:12px;
+            text-transform:uppercase;
+            border:none;
+        }
+        tbody tr{
+            border-bottom:1px solid #dbeafe;
+        }
+        tbody tr:nth-child(even){
+            background:#f0f6ff;
+        }
+        tbody tr:hover{
+            background:#dbeafe;
+        }
+        td{
+            padding:9px 14px;
+            color:#1e293b;
+            border:none;
+            vertical-align:top;
+        }
+
+        /* ── Código ─────────────────────────────────────── */
+        pre{
+            background:#f8faff;
+            border:1px solid #bfdbfe;
+            border-left:3px solid #3b82f6;
+            border-radius:4px;
+            padding:16px 18px;
+            font-size:12.5px;
+            line-height:1.6;
+            overflow-x:auto;
+            margin:14px 0;
+            color:#1e293b;
+        }
+        code{
+            background:#eff6ff;
+            color:#1d4ed8;
+            font-size:12.5px;
+            padding:2px 6px;
+            border-radius:3px;
+            font-family:'Courier New',Courier,monospace;
+        }
+        pre code{
+            background:none;
+            color:inherit;
+            padding:0;
+        }
+
+        /* ── Separadores ─────────────────────────────────── */
+        hr{
+            border:none;
+            border-top:1px solid #dbeafe;
+            margin:40px 0;
+        }
+
+        /* ── Listas ─────────────────────────────────────── */
+        ul,ol{
+            padding-left:20px;
+            margin:10px 0 18px;
+        }
+        li{
+            margin-bottom:6px;
+            color:#334155;
+            font-size:14px;
+        }
+
+        /* ── Blockquote ─────────────────────────────────── */
+        blockquote{
+            border-left:4px solid #3b82f6;
+            background:#eff6ff;
+            padding:12px 18px;
+            margin:16px 0;
+            border-radius:0 4px 4px 0;
+            color:#334155;
+            font-style:italic;
+        }
+
+        /* ── Nota ────────────────────────────────────────── */
+        .note{
+            font-size:12px;
+            color:#94a3b8;
+            margin-top:-8px;
+            margin-bottom:14px;
+        }
+
+        /* ── Footer ──────────────────────────────────────── */
+        .report-footer{
+            margin-top:60px;
+            padding-top:18px;
+            border-top:2px solid #3b82f6;
+            display:flex;
+            justify-content:space-between;
+            font-size:11px;
+            color:#94a3b8;
+            letter-spacing:0.04em;
+        }
+        </style>
+        
+</head>
+<body>
+
+  <!-- ══ CABECERA CORPORATIVA ══════════════════════════════════════ -->
+    <div class="report-header">
+    <div class="brand">CodeVault · Análisis de Seguridad Binaria</div>
+    <h1>Reporte de Auditoría — AAAA</h1>
+    <p class="subtitle">Análisis estático automatizado mediante Ghidra + Motor de Reglas + NIST NVD</p>
+    <div class="meta-row">
+      <div class="meta-item"><strong>Binario</strong>AAAA</div>
+      <div class="meta-item"><strong>Funciones analizadas</strong>7</div>
+      <div class="meta-item"><strong>Generado</strong>29/06/2026  05:05</div>
+      <div class="meta-item"><strong>Clasificación</strong>CONFIDENCIAL</div>
+    </div>
+  </div>
+
+  <!-- ══ CUERPO ════════════════════════════════════════════════════ -->
+  <div class="report-body">
+
+    
+    <hr>
+    <h2>🛡️ Detecciones del Motor de Reglas Local</h2><ul><li><strong>Improper Neutralization of Special Elements used in an OS Command</strong> en <code>FUN_00401020</code> (Evidencia: <code>sh</code>). <em>Mitigación: Evita llamadas al sistema. Usa APIs nativas de la librería estándar.</em></li>
+<li><strong>NULL Pointer Dereference</strong> en <code>FUN_00401020</code> (Evidencia: <code>0x0</code>). <em>Mitigación: Verifica siempre que el puntero devuelto por funciones como malloc no sea NULL antes de usarlo.</em></li>
+<li><strong>NULL Pointer Dereference</strong> en <code>FUN_00401100</code> (Evidencia: <code>0x0</code>). <em>Mitigación: Verifica siempre que el puntero devuelto por funciones como malloc no sea NULL antes de usarlo.</em></li>
+<li><strong>Buffer Copy without Checking Size (Classic Buffer Overflow)</strong> en <code>main</code> (Evidencia: <code>scanf</code>). <em>Mitigación: Usa versiones seguras como fgets, strncpy o snprintf.</em></li>
+<li><strong>Improper Neutralization of Special Elements used in an OS Command</strong> en <code>main</code> (Evidencia: <code>sh</code>). <em>Mitigación: Evita llamadas al sistema. Usa APIs nativas de la librería estándar.</em></li>
+<li><strong>NULL Pointer Dereference</strong> en <code>main</code> (Evidencia: <code>0x0</code>). <em>Mitigación: Verifica siempre que el puntero devuelto por funciones como malloc no sea NULL antes de usarlo.</em></li>
+<li><strong>Buffer Copy without Checking Size (Classic Buffer Overflow)</strong> en <code>iniciar</code> (Evidencia: <code>scanf</code>). <em>Mitigación: Usa versiones seguras como fgets, strncpy o snprintf.</em></li>
+<li><strong>Improper Neutralization of Special Elements used in an OS Command</strong> en <code>iniciar</code> (Evidencia: <code>sh</code>). <em>Mitigación: Evita llamadas al sistema. Usa APIs nativas de la librería estándar.</em></li>
+<li><strong>NULL Pointer Dereference</strong> en <code>iniciar</code> (Evidencia: <code>0x0</code>). <em>Mitigación: Verifica siempre que el puntero devuelto por funciones como malloc no sea NULL antes de usarlo.</em></li>
+<li><strong>Use of Externally-Controlled Format String</strong> en <code>imprimir</code> (Evidencia: <code>printf</code>). <em>Mitigación: Nunca pases variables directamente al primer argumento. Usa printf("%s", var).</em></li>
+<li><strong>Improper Neutralization of Special Elements used in an OS Command</strong> en <code>imprimir</code> (Evidencia: <code>sh</code>). <em>Mitigación: Evita llamadas al sistema. Usa APIs nativas de la librería estándar.</em></li>
+<li><strong>NULL Pointer Dereference</strong> en <code>imprimir</code> (Evidencia: <code>0x0</code>). <em>Mitigación: Verifica siempre que el puntero devuelto por funciones como malloc no sea NULL antes de usarlo.</em></li>
+<li><strong>Buffer Copy without Checking Size (Classic Buffer Overflow)</strong> en <code>enviar</code> (Evidencia: <code>scanf</code>). <em>Mitigación: Usa versiones seguras como fgets, strncpy o snprintf.</em></li>
+<li><strong>Use of Externally-Controlled Format String</strong> en <code>enviar</code> (Evidencia: <code>printf</code>). <em>Mitigación: Nunca pases variables directamente al primer argumento. Usa printf("%s", var).</em></li>
+<li><strong>Improper Neutralization of Special Elements used in an OS Command</strong> en <code>enviar</code> (Evidencia: <code>sh</code>). <em>Mitigación: Evita llamadas al sistema. Usa APIs nativas de la librería estándar.</em></li>
+<li><strong>NULL Pointer Dereference</strong> en <code>enviar</code> (Evidencia: <code>0x0</code>). <em>Mitigación: Verifica siempre que el puntero devuelto por funciones como malloc no sea NULL antes de usarlo.</em></li>
+<li><strong>Improper Neutralization of Special Elements used in an OS Command</strong> en <code>rce</code> (Evidencia: <code>system</code>). <em>Mitigación: Evita llamadas al sistema. Usa APIs nativas de la librería estándar.</em></li>
+<li><strong>Improper Neutralization of Special Elements used in an OS Command</strong> en <code>rce</code> (Evidencia: <code>sh</code>). <em>Mitigación: Evita llamadas al sistema. Usa APIs nativas de la librería estándar.</em></li>
+<li><strong>NULL Pointer Dereference</strong> en <code>rce</code> (Evidencia: <code>0x0</code>). <em>Mitigación: Verifica siempre que el puntero devuelto por funciones como malloc no sea NULL antes de usarlo.</em></li>
+<li><strong>Potential Backdoor / Shell access</strong> en <code>rce</code> (Evidencia: <code>/bin/sh</code>). <em>Mitigación: Presencia de rutas de shell en el binario. Investiga si se usan en system() o exec().</em></li>
+</ul><hr>
+    
+    <h2>📝 Anexo: Código Extraído</h2>
+<h3>Función: <code>FUN_00401020</code></h3>
+<pre><code class="language-c">void FUN_00401020(void)
+{
+(*(code *)PTR_00404010)();
+return;
+}
+</code></pre>
+<h3>Función: <code>FUN_00401100</code></h3>
+<pre><code class="language-c">/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+void FUN_00401100(void)
+{
+(*_DAT_00404048)();
+return;
+}
+</code></pre>
+<h3>Función: <code>main</code></h3>
+<pre><code class="language-c">void main(void)
+{
+int local_2c;
+undefined local_28 [32];
+setvbuf(stdout,(char *)0x0,2,0);
+do {
+puts(&quot;Opciones:&quot;);
+puts(&amp;DAT_00402012);
+puts(&quot;2: Imprimir nombre&quot;);
+puts(&quot;3: Enviar mensaje&quot;);
+puts(&quot;4: Salir&quot;);
+puts(&quot;5: RCE&quot;);
+puts(&amp;DAT_00402060);
+&quot;);
+__isoc99_scanf(&amp;DAT_00402089,&amp;local_2c);
+if (local_2c == 4) {
+FUN_00401100(0);
+LAB_004012f9:
+puts(&quot;OPCION INCORRECTA&quot;);
+}
+else {
+if (4 &lt; local_2c) goto LAB_004012f9;
+if (local_2c == 3) {
+enviar();
+}
+else {
+if (3 &lt; local_2c) goto LAB_004012f9;
+if (local_2c == 1) {
+iniciar(local_28);
+}
+else {
+if (local_2c != 2) goto LAB_004012f9;
+imprimir(local_28);
+}
+}
+}
+putchar(10);
+} while( true );
+}
+</code></pre>
+<h3>Función: <code>iniciar</code></h3>
+<pre><code class="language-c">void iniciar(undefined8 param_1)
+{
+&quot;);
+__isoc99_scanf(&amp;DAT_004020c2,param_1);
+return;
+}
+</code></pre>
+<h3>Función: <code>imprimir</code></h3>
+<pre><code class="language-c">void imprimir(undefined8 param_1)
+{
+printf(&quot;\nTu nombre es: %s\n&quot;,param_1);
+return;
+}
+</code></pre>
+<h3>Función: <code>enviar</code></h3>
+<pre><code class="language-c">void enviar(void)
+{
+undefined local_f8 [208];
+undefined local_28 [32];
+printf(&amp;DAT_004020e0);
+__isoc99_scanf(&amp;DAT_004020c2,local_28);
+puts(&amp;DAT_00402108);
+__isoc99_scanf(&amp;DAT_0040212a,local_f8);
+printf(&quot;Mensaje enviado a %s&quot;,local_28);
+return;
+}
+</code></pre>
+<h3>Función: <code>rce</code></h3>
+<pre><code class="language-c">void rce(void)
+{
+system(&quot;/bin/sh&quot;);
+return;
+}
+</code></pre>
+
+    <!-- Footer interno del documento -->
+    <div class="report-footer">
+      <span>CodeVault · Seguridad Binaria Automatizada</span>
+      <span>CONFIDENCIAL — uso interno</span>
+      <span>29/06/2026  05:05</span>
+    </div>
+
+  </div>
+
+</body>
+</html>

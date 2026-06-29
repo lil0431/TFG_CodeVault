@@ -1,0 +1,466 @@
+{
+    "binary": "AAAA",
+    "functions": [
+        {
+            "name": "FUN_00401020",
+            "address": "00401020",
+            "asm": [
+                "00401020: PUSH qword ptr [0x00404008]",
+                "00401026: JMP qword ptr [0x00404010]"
+            ],
+            "pseudo_c": [
+                "void FUN_00401020(void)",
+                "{",
+                "(*(code *)PTR_00404010)();",
+                "return;",
+                "}"
+            ],
+            "calls": []
+        },
+        {
+            "name": "FUN_00401100",
+            "address": "00401100",
+            "asm": [
+                "00401100: ENDBR64",
+                "00401104: JMP qword ptr [0x00404048]"
+            ],
+            "pseudo_c": [
+                "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */",
+                "void FUN_00401100(void)",
+                "{",
+                "(*_DAT_00404048)();",
+                "return;",
+                "}"
+            ],
+            "calls": [
+                "exit"
+            ]
+        },
+        {
+            "name": "main",
+            "address": "004011f6",
+            "asm": [
+                "004011f6: ENDBR64",
+                "004011fa: PUSH RBP",
+                "004011fb: MOV RBP,RSP",
+                "004011fe: SUB RSP,0x40",
+                "00401202: MOV dword ptr [RBP + -0x34],EDI",
+                "00401205: MOV qword ptr [RBP + -0x40],RSI",
+                "00401209: MOV RAX,qword ptr [0x00404060]",
+                "00401210: MOV ECX,0x0",
+                "00401215: MOV EDX,0x2",
+                "0040121a: MOV ESI,0x0",
+                "0040121f: MOV RDI,RAX",
+                "00401222: CALL 0x004010e0",
+                "00401227: LEA RDI,[0x402008]",
+                "0040122e: CALL 0x004010b0",
+                "00401233: LEA RDI,[0x402012]",
+                "0040123a: CALL 0x004010b0",
+                "0040123f: LEA RDI,[0x402025]",
+                "00401246: CALL 0x004010b0",
+                "0040124b: LEA RDI,[0x402038]",
+                "00401252: CALL 0x004010b0",
+                "00401257: LEA RDI,[0x40204a]",
+                "0040125e: CALL 0x004010b0",
+                "00401263: LEA RDI,[0x402053]",
+                "0040126a: CALL 0x004010b0",
+                "0040126f: LEA RDI,[0x402060]",
+                "00401276: CALL 0x004010b0",
+                "0040127b: LEA RDI,[0x402086]",
+                "00401282: MOV EAX,0x0",
+                "00401287: CALL 0x004010d0",
+                "0040128c: LEA RAX,[RBP + -0x24]",
+                "00401290: MOV RSI,RAX",
+                "00401293: LEA RDI,[0x402089]",
+                "0040129a: MOV EAX,0x0",
+                "0040129f: CALL 0x004010f0",
+                "004012a4: MOV EAX,dword ptr [RBP + -0x24]",
+                "004012a7: CMP EAX,0x4",
+                "004012aa: JZ 0x004012ef",
+                "004012ac: CMP EAX,0x4",
+                "004012af: JG 0x004012f9",
+                "004012b1: CMP EAX,0x3",
+                "004012b4: JZ 0x004012e3",
+                "004012b6: CMP EAX,0x3",
+                "004012b9: JG 0x004012f9",
+                "004012bb: CMP EAX,0x1",
+                "004012be: JZ 0x004012c7",
+                "004012c0: CMP EAX,0x2",
+                "004012c3: JZ 0x004012d5",
+                "004012c5: JMP 0x004012f9",
+                "004012c7: LEA RAX,[RBP + -0x20]",
+                "004012cb: MOV RDI,RAX",
+                "004012ce: CALL 0x00401314",
+                "004012d3: JMP 0x00401305",
+                "004012d5: LEA RAX,[RBP + -0x20]",
+                "004012d9: MOV RDI,RAX",
+                "004012dc: CALL 0x00401350",
+                "004012e1: JMP 0x00401305",
+                "004012e3: MOV EAX,0x0",
+                "004012e8: CALL 0x0040137b",
+                "004012ed: JMP 0x00401305",
+                "004012ef: MOV EDI,0x0",
+                "004012f4: CALL 0x00401100",
+                "004012f9: LEA RDI,[0x40208c]",
+                "00401300: CALL 0x004010b0",
+                "00401305: MOV EDI,0xa",
+                "0040130a: CALL 0x004010a0",
+                "0040130f: JMP 0x00401227"
+            ],
+            "pseudo_c": [
+                "void main(void)",
+                "{",
+                "int local_2c;",
+                "undefined local_28 [32];",
+                "setvbuf(stdout,(char *)0x0,2,0);",
+                "do {",
+                "puts(\"Opciones:\");",
+                "puts(&DAT_00402012);",
+                "puts(\"2: Imprimir nombre\");",
+                "puts(\"3: Enviar mensaje\");",
+                "puts(\"4: Salir\");",
+                "puts(\"5: RCE\");",
+                "puts(&DAT_00402060);",
+                "\");",
+                "__isoc99_scanf(&DAT_00402089,&local_2c);",
+                "if (local_2c == 4) {",
+                "FUN_00401100(0);",
+                "LAB_004012f9:",
+                "puts(\"OPCION INCORRECTA\");",
+                "}",
+                "else {",
+                "if (4 < local_2c) goto LAB_004012f9;",
+                "if (local_2c == 3) {",
+                "enviar();",
+                "}",
+                "else {",
+                "if (3 < local_2c) goto LAB_004012f9;",
+                "if (local_2c == 1) {",
+                "iniciar(local_28);",
+                "}",
+                "else {",
+                "if (local_2c != 2) goto LAB_004012f9;",
+                "imprimir(local_28);",
+                "}",
+                "}",
+                "}",
+                "putchar(10);",
+                "} while( true );",
+                "}"
+            ],
+            "calls": [
+                "setvbuf",
+                "puts",
+                "printf",
+                "__isoc99_scanf",
+                "iniciar",
+                "imprimir",
+                "enviar",
+                "FUN_00401100",
+                "putchar"
+            ]
+        },
+        {
+            "name": "iniciar",
+            "address": "00401314",
+            "asm": [
+                "00401314: ENDBR64",
+                "00401318: PUSH RBP",
+                "00401319: MOV RBP,RSP",
+                "0040131c: SUB RSP,0x10",
+                "00401320: MOV qword ptr [RBP + -0x8],RDI",
+                "00401324: LEA RDI,[0x4020a0]",
+                "0040132b: MOV EAX,0x0",
+                "00401330: CALL 0x004010d0",
+                "00401335: MOV RAX,qword ptr [RBP + -0x8]",
+                "00401339: MOV RSI,RAX",
+                "0040133c: LEA RDI,[0x4020c2]",
+                "00401343: MOV EAX,0x0",
+                "00401348: CALL 0x004010f0",
+                "0040134d: NOP",
+                "0040134e: LEAVE",
+                "0040134f: RET"
+            ],
+            "pseudo_c": [
+                "void iniciar(undefined8 param_1)",
+                "{",
+                "\");",
+                "__isoc99_scanf(&DAT_004020c2,param_1);",
+                "return;",
+                "}"
+            ],
+            "calls": [
+                "printf",
+                "__isoc99_scanf"
+            ]
+        },
+        {
+            "name": "imprimir",
+            "address": "00401350",
+            "asm": [
+                "00401350: ENDBR64",
+                "00401354: PUSH RBP",
+                "00401355: MOV RBP,RSP",
+                "00401358: SUB RSP,0x10",
+                "0040135c: MOV qword ptr [RBP + -0x8],RDI",
+                "00401360: MOV RAX,qword ptr [RBP + -0x8]",
+                "00401364: MOV RSI,RAX",
+                "00401367: LEA RDI,[0x4020c7]",
+                "0040136e: MOV EAX,0x0",
+                "00401373: CALL 0x004010d0",
+                "00401378: NOP",
+                "00401379: LEAVE",
+                "0040137a: RET"
+            ],
+            "pseudo_c": [
+                "void imprimir(undefined8 param_1)",
+                "{",
+                "printf(\"\\nTu nombre es: %s\\n\",param_1);",
+                "return;",
+                "}"
+            ],
+            "calls": [
+                "printf"
+            ]
+        },
+        {
+            "name": "enviar",
+            "address": "0040137b",
+            "asm": [
+                "0040137b: ENDBR64",
+                "0040137f: PUSH RBP",
+                "00401380: MOV RBP,RSP",
+                "00401383: SUB RSP,0xf0",
+                "0040138a: LEA RDI,[0x4020e0]",
+                "00401391: MOV EAX,0x0",
+                "00401396: CALL 0x004010d0",
+                "0040139b: LEA RAX,[RBP + -0x20]",
+                "0040139f: MOV RSI,RAX",
+                "004013a2: LEA RDI,[0x4020c2]",
+                "004013a9: MOV EAX,0x0",
+                "004013ae: CALL 0x004010f0",
+                "004013b3: LEA RDI,[0x402108]",
+                "004013ba: CALL 0x004010b0",
+                "004013bf: LEA RAX,[RBP + -0xf0]",
+                "004013c6: MOV RSI,RAX",
+                "004013c9: LEA RDI,[0x40212a]",
+                "004013d0: MOV EAX,0x0",
+                "004013d5: CALL 0x004010f0",
+                "004013da: LEA RAX,[RBP + -0x20]",
+                "004013de: MOV RSI,RAX",
+                "004013e1: LEA RDI,[0x40212d]",
+                "004013e8: MOV EAX,0x0",
+                "004013ed: CALL 0x004010d0",
+                "004013f2: NOP",
+                "004013f3: LEAVE",
+                "004013f4: RET"
+            ],
+            "pseudo_c": [
+                "void enviar(void)",
+                "{",
+                "undefined local_f8 [208];",
+                "undefined local_28 [32];",
+                "printf(&DAT_004020e0);",
+                "__isoc99_scanf(&DAT_004020c2,local_28);",
+                "puts(&DAT_00402108);",
+                "__isoc99_scanf(&DAT_0040212a,local_f8);",
+                "printf(\"Mensaje enviado a %s\",local_28);",
+                "return;",
+                "}"
+            ],
+            "calls": [
+                "printf",
+                "__isoc99_scanf",
+                "puts"
+            ]
+        },
+        {
+            "name": "rce",
+            "address": "004013f5",
+            "asm": [
+                "004013f5: ENDBR64",
+                "004013f9: PUSH RBP",
+                "004013fa: MOV RBP,RSP",
+                "004013fd: LEA RDI,[0x402142]",
+                "00401404: CALL 0x004010c0",
+                "00401409: NOP",
+                "0040140a: POP RBP",
+                "0040140b: RET"
+            ],
+            "pseudo_c": [
+                "void rce(void)",
+                "{",
+                "system(\"/bin/sh\");",
+                "return;",
+                "}"
+            ],
+            "calls": [
+                "system"
+            ]
+        }
+    ],
+    "local_findings": [
+        {
+            "funcion": "FUN_00401020",
+            "vulnerabilidad": "Improper Neutralization of Special Elements used in an OS Command",
+            "cwe_id": "CWE-78",
+            "severidad": "CRITICAL",
+            "evidencia": "sh",
+            "consejo": "Evita llamadas al sistema. Usa APIs nativas de la librería estándar."
+        },
+        {
+            "funcion": "FUN_00401020",
+            "vulnerabilidad": "NULL Pointer Dereference",
+            "cwe_id": "CWE-476",
+            "severidad": "MEDIUM",
+            "evidencia": "0x0",
+            "consejo": "Verifica siempre que el puntero devuelto por funciones como malloc no sea NULL antes de usarlo."
+        },
+        {
+            "funcion": "FUN_00401100",
+            "vulnerabilidad": "NULL Pointer Dereference",
+            "cwe_id": "CWE-476",
+            "severidad": "MEDIUM",
+            "evidencia": "0x0",
+            "consejo": "Verifica siempre que el puntero devuelto por funciones como malloc no sea NULL antes de usarlo."
+        },
+        {
+            "funcion": "main",
+            "vulnerabilidad": "Buffer Copy without Checking Size (Classic Buffer Overflow)",
+            "cwe_id": "CWE-120",
+            "severidad": "CRITICAL",
+            "evidencia": "scanf",
+            "consejo": "Usa versiones seguras como fgets, strncpy o snprintf."
+        },
+        {
+            "funcion": "main",
+            "vulnerabilidad": "Improper Neutralization of Special Elements used in an OS Command",
+            "cwe_id": "CWE-78",
+            "severidad": "CRITICAL",
+            "evidencia": "sh",
+            "consejo": "Evita llamadas al sistema. Usa APIs nativas de la librería estándar."
+        },
+        {
+            "funcion": "main",
+            "vulnerabilidad": "NULL Pointer Dereference",
+            "cwe_id": "CWE-476",
+            "severidad": "MEDIUM",
+            "evidencia": "0x0",
+            "consejo": "Verifica siempre que el puntero devuelto por funciones como malloc no sea NULL antes de usarlo."
+        },
+        {
+            "funcion": "iniciar",
+            "vulnerabilidad": "Buffer Copy without Checking Size (Classic Buffer Overflow)",
+            "cwe_id": "CWE-120",
+            "severidad": "CRITICAL",
+            "evidencia": "scanf",
+            "consejo": "Usa versiones seguras como fgets, strncpy o snprintf."
+        },
+        {
+            "funcion": "iniciar",
+            "vulnerabilidad": "Improper Neutralization of Special Elements used in an OS Command",
+            "cwe_id": "CWE-78",
+            "severidad": "CRITICAL",
+            "evidencia": "sh",
+            "consejo": "Evita llamadas al sistema. Usa APIs nativas de la librería estándar."
+        },
+        {
+            "funcion": "iniciar",
+            "vulnerabilidad": "NULL Pointer Dereference",
+            "cwe_id": "CWE-476",
+            "severidad": "MEDIUM",
+            "evidencia": "0x0",
+            "consejo": "Verifica siempre que el puntero devuelto por funciones como malloc no sea NULL antes de usarlo."
+        },
+        {
+            "funcion": "imprimir",
+            "vulnerabilidad": "Use of Externally-Controlled Format String",
+            "cwe_id": "CWE-134",
+            "severidad": "HIGH",
+            "evidencia": "printf",
+            "consejo": "Nunca pases variables directamente al primer argumento. Usa printf(\"%s\", var)."
+        },
+        {
+            "funcion": "imprimir",
+            "vulnerabilidad": "Improper Neutralization of Special Elements used in an OS Command",
+            "cwe_id": "CWE-78",
+            "severidad": "CRITICAL",
+            "evidencia": "sh",
+            "consejo": "Evita llamadas al sistema. Usa APIs nativas de la librería estándar."
+        },
+        {
+            "funcion": "imprimir",
+            "vulnerabilidad": "NULL Pointer Dereference",
+            "cwe_id": "CWE-476",
+            "severidad": "MEDIUM",
+            "evidencia": "0x0",
+            "consejo": "Verifica siempre que el puntero devuelto por funciones como malloc no sea NULL antes de usarlo."
+        },
+        {
+            "funcion": "enviar",
+            "vulnerabilidad": "Buffer Copy without Checking Size (Classic Buffer Overflow)",
+            "cwe_id": "CWE-120",
+            "severidad": "CRITICAL",
+            "evidencia": "scanf",
+            "consejo": "Usa versiones seguras como fgets, strncpy o snprintf."
+        },
+        {
+            "funcion": "enviar",
+            "vulnerabilidad": "Use of Externally-Controlled Format String",
+            "cwe_id": "CWE-134",
+            "severidad": "HIGH",
+            "evidencia": "printf",
+            "consejo": "Nunca pases variables directamente al primer argumento. Usa printf(\"%s\", var)."
+        },
+        {
+            "funcion": "enviar",
+            "vulnerabilidad": "Improper Neutralization of Special Elements used in an OS Command",
+            "cwe_id": "CWE-78",
+            "severidad": "CRITICAL",
+            "evidencia": "sh",
+            "consejo": "Evita llamadas al sistema. Usa APIs nativas de la librería estándar."
+        },
+        {
+            "funcion": "enviar",
+            "vulnerabilidad": "NULL Pointer Dereference",
+            "cwe_id": "CWE-476",
+            "severidad": "MEDIUM",
+            "evidencia": "0x0",
+            "consejo": "Verifica siempre que el puntero devuelto por funciones como malloc no sea NULL antes de usarlo."
+        },
+        {
+            "funcion": "rce",
+            "vulnerabilidad": "Improper Neutralization of Special Elements used in an OS Command",
+            "cwe_id": "CWE-78",
+            "severidad": "CRITICAL",
+            "evidencia": "system",
+            "consejo": "Evita llamadas al sistema. Usa APIs nativas de la librería estándar."
+        },
+        {
+            "funcion": "rce",
+            "vulnerabilidad": "Improper Neutralization of Special Elements used in an OS Command",
+            "cwe_id": "CWE-78",
+            "severidad": "CRITICAL",
+            "evidencia": "sh",
+            "consejo": "Evita llamadas al sistema. Usa APIs nativas de la librería estándar."
+        },
+        {
+            "funcion": "rce",
+            "vulnerabilidad": "NULL Pointer Dereference",
+            "cwe_id": "CWE-476",
+            "severidad": "MEDIUM",
+            "evidencia": "0x0",
+            "consejo": "Verifica siempre que el puntero devuelto por funciones como malloc no sea NULL antes de usarlo."
+        },
+        {
+            "funcion": "rce",
+            "vulnerabilidad": "Potential Backdoor / Shell access",
+            "cwe_id": "Backdoor-Pattern",
+            "severidad": "CRITICAL",
+            "evidencia": "/bin/sh",
+            "consejo": "Presencia de rutas de shell en el binario. Investiga si se usan en system() o exec()."
+        }
+    ],
+    "risk_scores": [],
+    "ai_report": ""
+}
