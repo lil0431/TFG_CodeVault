@@ -1,0 +1,336 @@
+{{>header2}}
+{{>csrf}}
+
+<section id="user" class="profile-section">
+	<div class="container">
+		<div class="profile-header">
+			<div class="profile-avatar">
+				<i class="fas fa-user-shield"></i>
+			</div>
+			<div class="profile-welcome">
+				{{#user.capybara}}
+				<h2><i class="fas fa-crown"></i> Hola Padrino {{user.username}}</h2>
+				<p class="profile-rank">Rango: Padrino del Cartel</p>
+				{{/user.capybara}}
+				{{^user.capybara}}
+				<h2>Hola {{user.username}}</h2>
+				<p class="profile-rank">Usuario Autorizado</p>
+				{{/user.capybara}}
+			</div>
+		</div>
+
+		{{#success}}
+		<div class="success-alert">
+			<i class="fas fa-check-circle"></i> {{success}}
+		</div>
+		{{/success}}
+
+		<div class="profile-card">
+			<div class="card-header">
+				<h3><i class="fas fa-id-card"></i> Información de la Cuenta</h3>
+			</div>
+			<div class="card-body">
+				<div class="info-grid">
+					{{#user.name}}
+					<div class="info-item">
+						<span class="info-label"><i class="fas fa-user"></i> Nombre:</span>
+						<span class="info-value">{{user.name}}</span>
+					</div>
+					{{/user.name}}
+					{{#user.lastName}}
+					<div class="info-item">
+						<span class="info-label"><i class="fas fa-user-tag"></i> Apellido:</span>
+						<span class="info-value">{{user.lastName}}</span>
+					</div>
+					{{/user.lastName}}
+					{{#user.email}}
+					<div class="info-item">
+						<span class="info-label"><i class="fas fa-envelope"></i> Correo Electrónico:</span>
+						<span class="info-value">{{user.email}}</span>
+					</div>
+					{{/user.email}}
+					{{#user.capybara}}
+					<div class="info-item capybara-info">
+						<span class="info-label"><i class="fas fa-paw"></i> Mi Capibara:</span>
+						<button class="capybara-button" onclick="location.href='/capybaras/{{user.capybara.id}}'">
+							<i class="fas fa-eye"></i> Ver a {{user.capybara.name}}
+						</button>
+					</div>
+					{{/user.capybara}}
+				</div>
+			</div>
+		</div>
+
+		<div class="actions-panel">
+			<button class="action-btn btn-edit" onclick="location.href='/users/{{user.id}}/edit'">
+				<i class="fas fa-edit"></i> Editar Cuenta
+			</button>
+			<button class="action-btn btn-delete" onclick="location.href='/users/{{user.id}}/delete'">
+				<i class="fas fa-trash-alt"></i> Borrar Cuenta
+			</button>
+			{{#admin}}
+			<button class="action-btn btn-admin" onclick="location.href='/users'">
+				<i class="fas fa-users-cog"></i> Todos los Usuarios
+			</button>
+			{{/admin}}
+			<form action="/logout" method="post" style="display: inline;">
+				<input type="hidden" name="_csrf" value="{{token}}"/>
+				<button type="submit" class="action-btn btn-logout">
+					<i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+				</button>
+			</form>
+		</div>
+	</div>
+</section>
+
+<style>
+	.profile-section {
+		min-height: calc(100vh - 200px);
+		padding: 80px 0;
+		background: linear-gradient(135deg, #0a0e27 0%, #0f172a 100%);
+	}
+	
+	.profile-section .container {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 20px;
+	}
+
+	.profile-header {
+		display: flex;
+		align-items: center;
+		gap: 25px;
+		margin-bottom: 30px;
+		padding: 30px;
+		background: linear-gradient(135deg, var(--secondary-blue), var(--primary-blue));
+		border: 2px solid var(--accent-blue);
+		border-radius: 15px;
+		box-shadow: 0 8px 32px rgba(59, 130, 246, 0.2);
+	}
+
+	.profile-avatar {
+		width: 100px;
+		height: 100px;
+		background: linear-gradient(135deg, var(--accent-blue), var(--bright-blue));
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 3rem;
+		color: var(--text-light);
+		box-shadow: 0 0 30px rgba(59, 130, 246, 0.4);
+		border: 3px solid var(--accent-blue);
+	}
+
+	.profile-welcome h2 {
+		color: var(--text-light);
+		font-size: 2.5rem;
+		margin-bottom: 5px;
+	}
+
+	.profile-rank {
+		color: var(--bright-blue);
+		font-size: 1.4rem;
+		font-weight: bold;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+	}
+
+	.success-alert {
+		background: linear-gradient(135deg, #065f46, #10b981);
+		border: 2px solid #059669;
+		color: white;
+		padding: 18px 24px;
+		border-radius: 10px;
+		margin-bottom: 25px;
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		font-weight: bold;
+		font-size: 1.15rem;
+		box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+	}
+
+	.profile-card {
+		background: linear-gradient(135deg, var(--secondary-blue), var(--primary-blue));
+		border: 2px solid var(--secondary-blue);
+		border-radius: 12px;
+		margin-bottom: 30px;
+		overflow: hidden;
+		box-shadow: 0 8px 32px rgba(59, 130, 246, 0.2);
+	}
+
+	.card-header {
+		background: linear-gradient(135deg, var(--accent-blue), var(--bright-blue));
+		padding: 20px;
+		border-bottom: 2px solid var(--bright-blue);
+	}
+
+	.card-header h3 {
+		color: var(--text-light);
+		font-size: 1.9rem;
+		margin: 0;
+	}
+
+	.card-body {
+		padding: 30px;
+	}
+
+	.info-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 20px;
+	}
+
+	.info-item {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 18px 22px;
+		background: rgba(59, 130, 246, 0.05);
+		border: 1px solid var(--accent-blue);
+		border-radius: 8px;
+		transition: all 0.3s;
+	}
+
+	.info-item:hover {
+		background: rgba(59, 130, 246, 0.15);
+		border-color: var(--bright-blue);
+	}
+
+	.info-label {
+		color: var(--text-grey);
+		font-weight: bold;
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		font-size: 1.15rem;
+	}
+
+	.info-value {
+		color: var(--text-light);
+		font-size: 1.4rem;
+	}
+
+	.capybara-info {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 15px;
+	}
+
+	.capybara-button {
+		padding: 12px 24px;
+		background: linear-gradient(135deg, var(--accent-blue), var(--bright-blue));
+		border: 2px solid var(--bright-blue);
+		border-radius: 8px;
+		color: var(--text-light);
+		font-weight: bold;
+		font-size: 1.05rem;
+		cursor: pointer;
+		transition: all 0.3s;
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
+
+	.capybara-button:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+	}
+
+	.actions-panel {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 15px;
+		justify-content: center;
+		padding: 20px;
+		background: linear-gradient(135deg, var(--secondary-blue), var(--primary-blue));
+		border: 2px solid var(--accent-blue);
+		border-radius: 12px;
+		box-shadow: 0 8px 32px rgba(59, 130, 246, 0.2);
+	}
+
+	.action-btn {
+		padding: 16px 32px;
+		border: 2px solid;
+		border-radius: 10px;
+		color: var(--text-light);
+		font-weight: bold;
+		cursor: pointer;
+		transition: all 0.3s;
+		font-size: 1.1rem;
+		display: inline-flex;
+		align-items: center;
+		gap: 10px;
+	}
+
+	.btn-edit {
+		background: linear-gradient(135deg, var(--accent-blue), var(--bright-blue));
+		border-color: var(--bright-blue);
+	}
+
+	.btn-edit:hover {
+		transform: translateY(-3px);
+		box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5);
+	}
+
+	.btn-delete {
+		background: linear-gradient(135deg, #ef4444, #dc2626);
+		border-color: #dc2626;
+	}
+
+	.btn-delete:hover {
+		transform: translateY(-3px);
+		box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
+	}
+
+	.btn-admin {
+		background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+		border-color: #a78bfa;
+	}
+
+	.btn-admin:hover {
+		transform: translateY(-3px);
+		box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
+	}
+
+	.btn-logout {
+		background: linear-gradient(135deg, #64748b, #94a3b8);
+		border-color: #94a3b8;
+	}
+
+	.btn-logout:hover {
+		transform: translateY(-3px);
+		box-shadow: 0 8px 25px rgba(148, 163, 184, 0.4);
+	}
+
+	@media (max-width: 768px) {
+		.profile-header {
+			flex-direction: column;
+			text-align: center;
+		}
+
+		.profile-welcome h2 {
+			font-size: 1.8rem;
+		}
+
+		.info-item {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 10px;
+		}
+
+		.actions-panel {
+			flex-direction: column;
+		}
+
+		.action-btn {
+			width: 100%;
+			justify-content: center;
+			font-size: 1rem;
+		}
+	}
+</style>
+
+{{>footer2}}
+

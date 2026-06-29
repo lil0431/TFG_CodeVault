@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Error de Acceso | CodeVault</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-blue: #0f172a;
+      --secondary-blue: #1e293b;
+      --accent-blue: #3b82f6;
+      --bright-blue: #60a5fa;
+      --dark-bg: #0a0e27;
+      --text-light: #e2e8f0;
+      --text-grey: #94a3b8;
+    }
+
+    body {
+      font-family: 'Fira Code', 'Courier New', monospace;
+      background: linear-gradient(135deg, var(--dark-bg) 0%, var(--primary-blue) 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-light);
+      padding: 20px;
+    }
+
+    .error-container {
+      background: linear-gradient(135deg, var(--secondary-blue), var(--primary-blue));
+      border: 3px solid var(--accent-blue);
+      border-radius: 15px;
+      box-shadow: 0 10px 50px rgba(59, 130, 246, 0.3), 0 0 100px rgba(59, 130, 246, 0.15);
+      max-width: 600px;
+      width: 100%;
+      padding: 50px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      animation: shake 0.5s;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+      20%, 40%, 60%, 80% { transform: translateX(10px); }
+    }
+
+    .error-container::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(220, 20, 60, 0.15) 0%, transparent 70%);
+      animation: pulse 3s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.3; }
+      50% { transform: scale(1.2); opacity: 0.6; }
+    }
+
+    .error-icon {
+      font-size: 6rem;
+      color: var(--crimson);
+      margin-bottom: 30px;
+      filter: drop-shadow(0 0 30px var(--blood-red));
+      animation: glow 1.5s infinite alternate;
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes glow {
+      from { 
+        filter: drop-shadow(0 0 20px var(--blood-red));
+        transform: scale(1);
+      }
+      to { 
+        filter: drop-shadow(0 0 40px var(--crimson));
+        transform: scale(1.1);
+      }
+    }
+
+    .alert-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--blood-red), var(--burgundy));
+      color: var(--text-light);
+      padding: 10px 25px;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      letter-spacing: 2px;
+      border: 2px solid var(--crimson);
+      margin-bottom: 30px;
+      box-shadow: 0 4px 20px rgba(139, 0, 0, 0.5);
+      position: relative;
+      z-index: 1;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 50%, 100% { opacity: 1; }
+      25%, 75% { opacity: 0.7; }
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: var(--crimson);
+      text-shadow: 0 0 15px var(--blood-red);
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .error-message {
+      background: rgba(220, 20, 60, 0.15);
+      border: 2px solid var(--crimson);
+      border-radius: 10px;
+      padding: 25px;
+      margin: 30px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .error-message p {
+      font-size: 1.1rem;
+      color: var(--text-light);
+      line-height: 1.8;
+      margin-bottom: 15px;
+    }
+
+    .error-message p:last-child {
+      margin-bottom: 0;
+    }
+
+    .error-message strong {
+      color: var(--crimson);
+      font-weight: bold;
+    }
+
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 30px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn {
+      padding: 18px 35px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--blood-red), var(--burgundy));
+      color: var(--text-light);
+      border: 2px solid var(--crimson);
+      box-shadow: 0 4px 20px rgba(139, 0, 0, 0.5);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, var(--crimson), var(--blood-red));
+      transform: translateY(-3px);
+      box-shadow: 0 6px 30px rgba(220, 20, 60, 0.8);
+    }
+
+    .btn-secondary {
+      background: linear-gradient(135deg, var(--dark-grey), var(--secondary-dark));
+      color: var(--text-light);
+      border: 2px solid var(--burgundy);
+    }
+
+    .btn-secondary:hover {
+      background: linear-gradient(135deg, var(--secondary-dark), var(--dark-grey));
+      border-color: var(--crimson);
+      transform: translateY(-2px);
+    }
+
+    .security-warning {
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid var(--burgundy);
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 30px;
+      font-size: 0.9rem;
+      color: var(--text-grey);
+      position: relative;
+      z-index: 1;
+    }
+
+    .security-warning i {
+      color: var(--crimson);
+      margin-right: 10px;
+    }
+
+    .attempts-counter {
+      background: rgba(139, 0, 0, 0.2);
+      border-left: 4px solid var(--crimson);
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 5px;
+      font-size: 0.95rem;
+      color: var(--text-grey);
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (max-width: 650px) {
+      .error-container {
+        padding: 40px 25px;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .error-icon {
+        font-size: 4.5rem;
+      }
+
+      .error-message p {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="error-container">
+    <div class="error-icon">
+      <i class="fas fa-exclamation-triangle"></i>
+    </div>
+
+    <div class="alert-badge">
+      <i class="fas fa-lock"></i> ACCESO DENEGADO
+    </div>
+
+    <h1>Error de Autenticación</h1>
+
+    <div class="error-message">
+      <p><strong>¡CREDENCIALES INVÁLIDAS!</strong></p>
+      <p>El sistema ha detectado un intento fallido de acceso.</p>
+      <p>Las credenciales proporcionadas no coinciden con ningún usuario autorizado en nuestra base de datos.</p>
+      <p><strong>Por favor, verifique:</strong></p>
+      <p>✗ Nombre de usuario correcto<br>
+         ✗ Contraseña sin errores tipográficos<br>
+         ✗ Estado de su cuenta activo</p>
+    </div>
+
+    <div class="button-group">
+      <a href="/login" class="btn btn-primary">
+        <i class="fas fa-redo"></i> Intentar de Nuevo
+      </a>
+      <a href="/" class="btn btn-secondary">
+        <i class="fas fa-home"></i> Volver al Inicio
+      </a>
+    </div>
+
+    <div class="attempts-counter">
+      <i class="fas fa-history"></i> Todos los intentos de acceso son registrados y monitoreados
+    </div>
+
+    <div class="security-warning">
+      <i class="fas fa-shield-alt"></i>
+      <strong>Aviso de Seguridad:</strong> Múltiples intentos fallidos pueden resultar en el bloqueo temporal de su cuenta. Si olvidó su contraseña o tiene problemas de acceso, contacte con el administrador del sistema.
+    </div>
+  </div>
+</body>
+</html>

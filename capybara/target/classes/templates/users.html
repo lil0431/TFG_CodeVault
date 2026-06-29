@@ -1,0 +1,213 @@
+{{>header2}}
+<section id="view" class="users-section">
+  <div class="container">
+    <div class="section-title">
+      <h2><i class="fas fa-users"></i> Gestión de Usuarios</h2>
+      <p>Panel de administración de cuentas autorizadas</p>
+    </div>
+
+    <style>
+      .section-title {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .section-title h2 {
+        font-size: 2.8rem;
+        color: var(--text-light, #e2e8f0);
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+
+      .section-title p {
+        font-size: 1.3rem;
+        color: var(--text-grey, #94a3b8);
+      }
+    </style>
+
+    <div class="users-table-container">
+      <table class="users-table">
+        <thead>
+          <tr>
+            <th><i class="fas fa-user"></i> Nombre de Usuario</th>
+            <th><i class="fas fa-cog"></i> Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#users}}
+          <tr>
+            <td class="username-cell">
+              <div class="user-icon">
+                <i class="fas fa-user-shield"></i>
+              </div>
+              <span>{{username}}</span>
+            </td>
+            <td class="actions-cell">
+              <button id="editButton-{{id}}" class="btn-edit" onclick="location.href='/users/{{id}}/edit'">
+                <i class="fas fa-edit"></i> Editar
+              </button>
+              <button id="deleteButton-{{id}}" class="btn-delete" onclick="location.href='/users/{{id}}/delete'">
+                <i class="fas fa-trash-alt"></i> Borrar
+              </button>
+            </td>
+          </tr>
+          {{/users}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<style>
+  .users-section {
+    min-height: calc(100vh - 200px);
+    padding: 80px 0;
+    background: linear-gradient(135deg, var(--dark-bg, #0a0e27) 0%, var(--primary-blue, #0f172a) 100%);
+  }
+  
+  .users-section .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .users-table-container {
+    background: linear-gradient(135deg, var(--secondary-blue, #1e293b), var(--primary-blue, #0f172a));
+    border: 2px solid var(--accent-blue, #3b82f6);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 8px 32px rgba(59, 130, 246, 0.3);
+    overflow-x: auto;
+  }
+
+  .users-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: var(--text-light, #e2e8f0);
+  }
+
+  .users-table thead tr {
+    background: linear-gradient(135deg, var(--accent-blue, #3b82f6), var(--bright-blue, #60a5fa));
+    border-bottom: 3px solid var(--bright-blue, #60a5fa);
+  }
+
+  .users-table th {
+    padding: 18px 20px;
+    text-align: left;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: var(--text-light, #e2e8f0);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .users-table tbody tr {
+    background: rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid var(--accent-blue, #3b82f6);
+    transition: all 0.3s;
+  }
+
+  .users-table tbody tr:hover {
+    background: rgba(59, 130, 246, 0.15);
+    transform: scale(1.01);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+  }
+
+  .users-table td {
+    padding: 18px 20px;
+    font-size: 1.05rem;
+  }
+
+  .username-cell {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-weight: 600;
+    font-size: 1.08rem;
+  }
+
+  .user-icon {
+    width: 45px;
+    height: 45px;
+    background: linear-gradient(135deg, var(--accent-blue, #3b82f6), var(--bright-blue, #60a5fa));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.6);
+  }
+
+  .actions-cell {
+    display: flex;
+    gap: 10px;
+  }
+
+  .btn-edit, .btn-delete {
+    padding: 12px 22px;
+    border: none;
+    border-radius: 6px;
+    color: var(--text-light, #e2e8f0);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-edit {
+    background: linear-gradient(135deg, var(--accent-blue, #3b82f6), var(--bright-blue, #60a5fa));
+    border: 1px solid var(--bright-blue, #60a5fa);
+  }
+
+  .btn-edit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+  }
+
+  .btn-delete {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    border: 1px solid #dc2626;
+  }
+
+  .btn-delete:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+  }
+
+  @media (max-width: 768px) {
+    .users-table {
+      font-size: 0.95rem;
+    }
+
+    .users-table th,
+    .users-table td {
+      padding: 12px;
+    }
+
+    .actions-cell {
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .btn-edit, .btn-delete {
+      width: 100%;
+      justify-content: center;
+      font-size: 0.95rem;
+    }
+
+    .username-cell {
+      font-size: 1rem;
+    }
+
+    .user-icon {
+      width: 38px;
+      height: 38px;
+      font-size: 1.1rem;
+    }
+  }
+</style>
+
+{{>footer2}}

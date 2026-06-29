@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error | WeaponsBara</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Efecto de fondo animado */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(139, 0, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(220, 20, 60, 0.1) 0%, transparent 50%);
+            animation: rotate 30s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-container {
+            max-width: 800px;
+            text-align: center;
+            padding: 40px;
+            position: relative;
+            z-index: 1;
+            background: rgba(26, 26, 26, 0.8);
+            border-radius: 20px;
+            border: 2px solid #8b0000;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .error-logo {
+            font-size: 3em;
+            color: #dc143c;
+            margin-bottom: 20px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                filter: drop-shadow(0 0 20px rgba(220, 20, 60, 0.6));
+            }
+            50% {
+                transform: scale(1.1);
+                filter: drop-shadow(0 0 40px rgba(220, 20, 60, 0.9));
+            }
+        }
+
+        .error-title {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #dc143c;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            font-weight: bold;
+        }
+
+        .error-code {
+            font-size: 8em;
+            font-weight: bold;
+            color: #8b0000;
+            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.8);
+            margin: 20px 0;
+            line-height: 1;
+            animation: glitch 3s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 100% {
+                text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.8);
+            }
+            25% {
+                text-shadow: -4px 4px 8px rgba(220, 20, 60, 0.8);
+            }
+            50% {
+                text-shadow: 4px -4px 8px rgba(139, 0, 0, 0.8);
+            }
+            75% {
+                text-shadow: -4px -4px 8px rgba(220, 20, 60, 0.8);
+            }
+        }
+
+        .error-message {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #e0e0e0;
+            font-weight: 600;
+        }
+
+        .error-description {
+            font-size: 1.1em;
+            color: #a0a0a0;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .error-svg {
+            width: 300px;
+            height: 300px;
+            margin: 30px auto;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .button-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #dc143c 0%, #8b0000 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(220, 20, 60, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #3a3a3a 0%, #1a1a1a 100%);
+            color: #e0e0e0;
+            border: 2px solid #8b0000;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(139, 0, 0, 0.4);
+            border-color: #dc143c;
+        }
+
+        .error-details {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            border: 1px solid #3a3a3a;
+            font-size: 0.9em;
+            color: #a0a0a0;
+            text-align: left;
+        }
+
+        .error-details strong {
+            color: #dc143c;
+        }
+
+        @media (max-width: 768px) {
+            .error-container {
+                padding: 20px;
+                margin: 20px;
+            }
+
+            .error-code {
+                font-size: 5em;
+            }
+
+            .error-title {
+                font-size: 1.8em;
+            }
+
+            .error-message {
+                font-size: 1.2em;
+            }
+
+            .button-container {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .error-svg {
+                width: 200px;
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-logo">
+            <i class="fas fa-skull-crossbones"></i>
+        </div>
+
+        <h1 class="error-title">¡ZONA RESTRINGIDA!</h1>
+        
+        <div class="error-code">{{status}}</div>
+        
+        <h2 class="error-message">¿Te has perdido, soldado?</h2>
+        
+        <p class="error-description">
+            Parece que has entrado en territorio no autorizado. Esta zona está clasificada y no tienes el nivel de acceso necesario para estar aquí.
+        </p>
+
+        <!-- SVG Ilustración personalizada -->
+        <svg class="error-svg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+            <!-- Fondo del radar -->
+            <circle cx="200" cy="200" r="150" fill="none" stroke="#8b0000" stroke-width="2" opacity="0.3"/>
+            <circle cx="200" cy="200" r="100" fill="none" stroke="#8b0000" stroke-width="2" opacity="0.3"/>
+            <circle cx="200" cy="200" r="50" fill="none" stroke="#8b0000" stroke-width="2" opacity="0.3"/>
+            
+            <!-- Líneas del radar -->
+            <line x1="200" y1="50" x2="200" y2="350" stroke="#8b0000" stroke-width="1" opacity="0.2"/>
+            <line x1="50" y1="200" x2="350" y2="200" stroke="#8b0000" stroke-width="1" opacity="0.2"/>
+            
+            <!-- Centro del radar -->
+            <circle cx="200" cy="200" r="10" fill="#dc143c">
+                <animate attributeName="r" values="10;15;10" dur="2s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="1;0.5;1" dur="2s" repeatCount="indefinite"/>
+            </circle>
+            
+            <!-- Línea de barrido del radar -->
+            <line x1="200" y1="200" x2="200" y2="50" stroke="#dc143c" stroke-width="2" opacity="0.6">
+                <animateTransform
+                    attributeName="transform"
+                    attributeType="XML"
+                    type="rotate"
+                    from="0 200 200"
+                    to="360 200 200"
+                    dur="4s"
+                    repeatCount="indefinite"/>
+            </line>
+            
+            <!-- Señal de alerta parpadeante -->
+            <text x="200" y="200" text-anchor="middle" font-size="80" fill="#dc143c" font-family="Arial, sans-serif" font-weight="bold">
+                !
+                <animate attributeName="opacity" values="1;0.2;1" dur="1s" repeatCount="indefinite"/>
+            </text>
+            
+            <!-- Texto ACCESO DENEGADO -->
+            <text x="200" y="380" text-anchor="middle" font-size="20" fill="#8b0000" font-family="Arial, sans-serif" font-weight="bold">
+                ACCESO DENEGADO
+            </text>
+            
+            <!-- Icono de calavera simplificado -->
+            <g opacity="0.3">
+                <ellipse cx="180" cy="160" rx="8" ry="10" fill="#dc143c"/>
+                <ellipse cx="220" cy="160" rx="8" ry="10" fill="#dc143c"/>
+                <path d="M 190 180 Q 200 185 210 180" stroke="#dc143c" stroke-width="2" fill="none"/>
+            </g>
+        </svg>
+
+        <div class="button-container">
+            <a href="/" class="btn btn-primary">
+                <i class="fas fa-home"></i>
+                Volver al Cuartel General
+            </a>
+            <a href="javascript:history.back()" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i>
+                Retroceder
+            </a>
+        </div>
+
+        <div class="error-details">
+            <strong>Detalles Técnicos:</strong><br>
+            <strong>Código de Error:</strong> {{status}}<br>
+            <strong>Mensaje:</strong> {{error}}<br>
+            <strong>Ruta:</strong> {{path}}<br>
+            <strong>Timestamp:</strong> {{timestamp}}<br>
+            <br>
+            Si crees que esto es un error, contacta con el administrador del sistema en <strong>contacto@weaponsbara.gov</strong>
+        </div>
+    </div>
+</body>
+</html>
